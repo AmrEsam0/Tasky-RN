@@ -1,38 +1,40 @@
-import React, { useState } from "react";
-import { Text, StyleSheet, Button, View, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 type Props = {};
 
-export const Card = (props: Props) => {
-	const [count, setCount] = useState(0);
-	var disabled = count >= 1;
+export const NumAPICard = (props: Props) => {
+	const [trivia, setTrivia] = useState("");
+	const [number, setNumber] = useState(0);
+
+	useEffect(() => {
+		fetch(`http://numbersapi.com/${number}`)
+			.then((response) => response.text())
+			.then((triviaFull) => {
+				const trivia = triviaFull.slice(5);
+				setTrivia(trivia);
+			});
+	}, [number]);
 	return (
 		<View style={styles.card}>
-			<Text style={[styles.title, styles.baseText]}>My Counter</Text>
-			<Text style={[styles.baseText, styles.number]}>{count}</Text>
+			<Text style={[styles.title, styles.baseText]}>My Numbers</Text>
+			<Text style={[styles.baseText, styles.number]}>{number}</Text>
 
 			<View style={styles.buttonRow}>
 				<TouchableOpacity
 					style={styles.button}
-					onPress={() => setCount(count + 1)}
+					onPress={() => setNumber(number + 1)}
 				>
 					<Text style={[styles.baseText, styles.buttonText]}>+</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					style={[styles.button, disabled ? null : styles.buttonDisabled]}
-					disabled={disabled ? false : true}
-					onPress={() => setCount(count - 1)}
+					style={styles.button}
+					onPress={() => setNumber(number - 1)}
 				>
-					<Text
-						style={[
-							styles.baseText,
-							disabled ? styles.buttonText : styles.title,
-						]}
-					>
-						-
-					</Text>
+					<Text style={[styles.baseText, styles.buttonText]}>-</Text>
 				</TouchableOpacity>
 			</View>
+			<Text style={[styles.baseText, styles.trivia]}>{trivia}</Text>
 		</View>
 	);
 };
@@ -68,6 +70,11 @@ const styles = StyleSheet.create({
 	baseText: {
 		color: "#fff",
 		textAlign: "center",
+	},
+	trivia: {
+		flex: 0.6,
+		fontSize: 24,
+		paddingHorizontal: 6,
 	},
 	title: {
 		fontSize: 40,

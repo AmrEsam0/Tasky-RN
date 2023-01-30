@@ -1,14 +1,17 @@
 import { StatusBar } from "expo-status-bar";
+import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-import Card from "./components/Card";
+import { Card } from "./components/Card";
+import { NumAPICard } from "./components/NumAPICard";
 
 export default function App() {
 	return (
 		<View style={styles.container}>
-			<Text style={styles.mainHeader}>My App</Text>
-			<Card />
 			<StatusBar style="auto" />
+			<Text style={styles.mainHeader}>My App</Text>
+			{/* <Card /> */}
+			<NumAPICard />
 		</View>
 	);
 }
