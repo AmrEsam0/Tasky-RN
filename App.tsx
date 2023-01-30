@@ -1,12 +1,14 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
+
 import Card from "./components/Card";
 
 export default function App() {
 	return (
 		<View style={styles.container}>
+			<Text style={styles.mainHeader}>My App</Text>
 			<Card />
-			<StatusBar style="inverted" />
+			<StatusBar style="auto" />
 		</View>
 	);
 }
@@ -14,8 +16,14 @@ export default function App() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#0D152A",
+		backgroundColor: "#EBEBEB",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	mainHeader: {
+		alignSelf: "flex-start",
+		fontSize: 90,
+		flex: 0.2,
+		color: "#2C2A57",
 	},
 });

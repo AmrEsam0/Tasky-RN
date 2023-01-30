@@ -9,7 +9,7 @@ export default function Card({}: Props) {
 	var disabled = count >= 1;
 	return (
 		<View style={styles.card}>
-			<Text style={[styles.title, styles.baseText]}>My Card</Text>
+			<Text style={[styles.title, styles.baseText]}>My Counter</Text>
 			<Text style={[styles.baseText, styles.number]}>{count}</Text>
 
 			<View style={styles.buttonRow}>
@@ -17,14 +17,21 @@ export default function Card({}: Props) {
 					style={styles.button}
 					onPress={() => setCount(count + 1)}
 				>
-					<Text style={[styles.baseText, styles.title]}>+</Text>
+					<Text style={[styles.baseText, styles.buttonText]}>+</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={[styles.button, disabled ? null : styles.buttonDisabled]}
 					disabled={disabled ? false : true}
 					onPress={() => setCount(count - 1)}
 				>
-					<Text style={[styles.baseText, styles.title]}>-</Text>
+					<Text
+						style={[
+							styles.baseText,
+							disabled ? styles.buttonText : styles.title,
+						]}
+					>
+						-
+					</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
@@ -33,12 +40,17 @@ export default function Card({}: Props) {
 
 const styles = StyleSheet.create({
 	card: {
-		height: 500,
+		flex: 0.6,
+		width: "95%",
 		alignItems: "center",
 		justifyContent: "space-evenly",
 		borderColor: "#FFFFFF19",
 		borderWidth: 1,
-		borderRadius: 3,
+		borderRadius: 6,
+		elevation: 9,
+		shadowColor: "#2C2A579C",
+		// background color must be set
+		backgroundColor: "#2C2A57",
 	},
 	buttonRow: {
 		width: 300,
@@ -47,7 +59,7 @@ const styles = StyleSheet.create({
 		justifyContent: "space-evenly",
 	},
 	button: {
-		backgroundColor: "#105192",
+		backgroundColor: "#EBEBEB",
 		borderRadius: 3,
 		width: 120,
 		alignItems: "center",
@@ -61,6 +73,11 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 40,
 		fontWeight: "bold",
+	},
+	buttonText: {
+		fontSize: 40,
+		fontWeight: "bold",
+		color: "#2C2A57",
 	},
 	number: {
 		fontSize: 80,
