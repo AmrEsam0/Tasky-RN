@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+	View,
+	Text,
+	TouchableOpacity,
+	StyleSheet,
+	TextInput,
+	Alert,
+} from "react-native";
 
 type Props = {};
 
 export const NumAPICard = (props: Props) => {
 	const [trivia, setTrivia] = useState("");
 	const [number, setNumber] = useState(0);
+	const [isPressed, setIsPressed] = useState(false);
 
 	useEffect(() => {
 		fetch(`http://numbersapi.com/${number}`)
@@ -14,24 +22,27 @@ export const NumAPICard = (props: Props) => {
 				const trivia = triviaFull.slice(5);
 				setTrivia(trivia);
 			});
-	}, [number]);
+	}, [isPressed]);
+	handle;
+
 	return (
 		<View style={styles.card}>
 			<Text style={[styles.title, styles.baseText]}>My Numbers</Text>
-			<Text style={[styles.baseText, styles.number]}>{number}</Text>
 
 			<View style={styles.buttonRow}>
+				<TextInput
+					style={[styles.input, styles.number]}
+					value={number.toString() === "NaN" ? "0" : number.toString()}
+					keyboardType="numeric"
+					onChangeText={(text) => {
+						text === "" ? setNumber(0) : setNumber(parseInt(text));
+					}}
+				/>
 				<TouchableOpacity
 					style={styles.button}
-					onPress={() => setNumber(number + 1)}
+					onPress={() => setIsPressed(!isPressed)}
 				>
-					<Text style={[styles.baseText, styles.buttonText]}>+</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => setNumber(number - 1)}
-				>
-					<Text style={[styles.baseText, styles.buttonText]}>-</Text>
+					<Text style={[styles.baseText, styles.buttonText]}>Get Trivia</Text>
 				</TouchableOpacity>
 			</View>
 			<Text style={[styles.baseText, styles.trivia]}>{trivia}</Text>
@@ -81,14 +92,22 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 	},
 	buttonText: {
-		fontSize: 40,
+		fontSize: 20,
 		fontWeight: "bold",
 		color: "#2C2A57",
+		padding: 8,
 	},
 	number: {
-		fontSize: 80,
+		fontSize: 28,
 	},
-	buttonDisabled: {
-		backgroundColor: "#2C2C2C",
+
+	input: {
+		margin: 12,
+		borderWidth: 1,
+		borderColor: "#EBEBEB",
+		padding: 10,
+		width: "50%",
+		color: "#ffffff",
+		textAlign: "center",
 	},
 });
