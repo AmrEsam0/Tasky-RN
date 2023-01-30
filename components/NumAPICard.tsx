@@ -23,7 +23,6 @@ export const NumAPICard = (props: Props) => {
 				setTrivia(trivia);
 			});
 	}, [isPressed]);
-	handle;
 
 	return (
 		<View style={styles.card}>

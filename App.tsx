@@ -28,5 +28,6 @@ const styles = StyleSheet.create({
 		fontSize: 90,
 		flex: 0.2,
 		color: "#2C2A57",
+		marginBottom: 20,
 	},
 });
