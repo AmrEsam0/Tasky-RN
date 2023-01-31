@@ -1,30 +1,21 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, StatusBar, SafeAreaView} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
-import {LoginScreen} from './components/LoginScreen';
-import {NumAPICard} from './components/NumAPICard';
+import {LoginScreen} from './screens/LoginScreen';
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: StatusBar.currentHeight,
+      }}>
+      <StatusBar translucent backgroundColor="#1706405F" />
       <LoginScreen />
-      {/* <NumAPICard /> */}
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#2C2A57',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  mainHeader: {
-    alignSelf: 'flex-start',
-    fontSize: 90,
-    flex: 0.2,
-    color: '#2C2A57',
-    marginBottom: 20,
-  },
-});
+const styles = StyleSheet.create({});
