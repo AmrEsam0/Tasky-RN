@@ -8,10 +8,9 @@ import { NumAPICard } from "./components/NumAPICard";
 export default function App() {
 	return (
 		<View style={styles.container}>
-			<StatusBar style="auto" />
-			<Text style={styles.mainHeader}>My App</Text>
-			{/* <Card /> */}
-			<NumAPICard />
+			<StatusBar style="inverted" />
+			<Card />
+			{/* <NumAPICard /> */}
 		</View>
 	);
 }
@@ -19,7 +18,7 @@ export default function App() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#EBEBEB",
+		backgroundColor: "#2C2A57",
 		alignItems: "center",
 		justifyContent: "center",
 	},

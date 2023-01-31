@@ -1,5 +1,14 @@
+import Lottie from "lottie-react-native";
 import React, { useState } from "react";
-import { Text, StyleSheet, Button, View, TouchableOpacity } from "react-native";
+import {
+	Text,
+	StyleSheet,
+	Button,
+	View,
+	TouchableOpacity,
+	Image,
+	ImageComponent,
+} from "react-native";
 
 type Props = {};
 
@@ -8,31 +17,8 @@ export const Card = (props: Props) => {
 	var disabled = count >= 1;
 	return (
 		<View style={styles.card}>
-			<Text style={[styles.title, styles.baseText]}>My Counter</Text>
-			<Text style={[styles.baseText, styles.number]}>{count}</Text>
-
-			<View style={styles.buttonRow}>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => setCount(count + 1)}
-				>
-					<Text style={[styles.baseText, styles.buttonText]}>+</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={[styles.button, disabled ? null : styles.buttonDisabled]}
-					disabled={disabled ? false : true}
-					onPress={() => setCount(count - 1)}
-				>
-					<Text
-						style={[
-							styles.baseText,
-							disabled ? styles.buttonText : styles.title,
-						]}
-					>
-						-
-					</Text>
-				</TouchableOpacity>
-			</View>
+			{/* <Lottie source={require("../assets/launch.json")} /> */}
+			<Text style={[styles.baseText, styles.title]}>Card </Text>
 		</View>
 	);
 };
@@ -43,13 +29,6 @@ const styles = StyleSheet.create({
 		width: "95%",
 		alignItems: "center",
 		justifyContent: "space-evenly",
-		borderColor: "#FFFFFF19",
-		borderWidth: 1,
-		borderRadius: 6,
-		elevation: 9,
-		shadowColor: "#2C2A579C",
-		// background color must be set
-		backgroundColor: "#2C2A57",
 	},
 	buttonRow: {
 		width: 300,
