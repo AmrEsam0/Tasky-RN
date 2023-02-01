@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import TextInputAffix from 'react-native-paper/lib/typescript/components/TextInput/Adornment/TextInputAffix';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Colors} from '../style/Colors';
 
 type Props = {
   label: string;
@@ -15,12 +16,13 @@ type Props = {
 
 // TODO: move styles down to the bottom of the file
 // TODO: move all styles to a separate file??
+// TODO: add the eye icon to the password input
 export const Input = (props: Props) => {
   const [isFocused, setIsFocused] = React.useState(false);
   const [inputText, setInputText] = React.useState('');
   return (
-    <View style={{marginBottom: 22}}>
-      <Text variant="labelLarge" style={{color: '#fff', marginBottom: 2}}>
+    <View style={{marginBottom: '8%'}}>
+      <Text variant="labelLarge" style={{color: Colors.textPrimary}}>
         {props.label}
       </Text>
       <TextInput
@@ -30,8 +32,8 @@ export const Input = (props: Props) => {
         mode="outlined"
         autoCorrect={false}
         onChangeText={inputText => setInputText(inputText)}
-        placeholderTextColor="#252525A4"
-        style={{backgroundColor: '#EDEDED'}}
+        placeholderTextColor={Colors.textAccented}
+        style={{backgroundColor: Colors.backgroundAccented}}
         onFocus={() => {
           props.onFocus;
           setIsFocused(true);
@@ -40,7 +42,7 @@ export const Input = (props: Props) => {
         left={
           <TextInput.Icon
             icon={props.iconName}
-            iconColor={isFocused ? '#3C0FA6' : '#2A0C6F6F'}
+            iconColor={isFocused ? Colors.accentDark : Colors.textAccented}
             onFocus={() => {
               props.onFocus;
               setIsFocused(true);

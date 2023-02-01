@@ -3,6 +3,7 @@ import {StyleSheet, View, Text, StatusBar, SafeAreaView} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {LoginScreen} from './screens/LoginScreen';
+import {Colors} from './style/Colors';
 
 export default function App() {
   return (
@@ -12,7 +13,11 @@ export default function App() {
         justifyContent: 'center',
         paddingTop: StatusBar.currentHeight,
       }}>
-      <StatusBar translucent backgroundColor="#1706405F" />
+      <StatusBar
+        barStyle={'dark-content'}
+        translucent
+        backgroundColor={Colors.bacgroundLight}
+      />
       <LoginScreen />
     </View>
   );
