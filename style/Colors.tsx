@@ -8,3 +8,5 @@ export const Colors = {
   accentDark: '#3C237A',
   accentDarker: '#221446',
 };
+
+// TODO: move to light green color as accent

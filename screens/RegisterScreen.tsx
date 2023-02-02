@@ -5,10 +5,8 @@ import {Input} from '../components/InputComponent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../style/Colors';
 
-//TODO: extract components here and in RegisterScreen
-export function LoginScreen({navigation}) {
+export function RegisterScreen({navigation}) {
   return (
-    // {
     <SafeAreaView
       style={{
         width: '100%',
@@ -22,31 +20,49 @@ export function LoginScreen({navigation}) {
         }}>
         <Text
           variant="displayLarge"
-          style={{color: Colors.accentDark, marginBottom: '12%'}}>
-          Welcome Back!
+          style={{color: Colors.accentDark, marginBottom: '6%'}}>
+          Welcome
         </Text>
         <Text
           variant="displaySmall"
-          style={{color: Colors.accentDark, marginBottom: '8%'}}>
-          Login
+          style={{color: Colors.accentDark, marginBottom: '4%'}}>
+          Register
         </Text>
-        <View>
-          <Input
-            label="Email"
-            iconName="email-outline"
-            placeholder="Enter your email"
-            keyboardType="email-address"
-          />
-          <Input
-            label="Password"
-            iconName="lock-outline"
-            placeholder="Enter your password"
-            password={true}
-          />
-        </View>
+        <Input
+          label="First Name"
+          iconName="account-outline"
+          placeholder="Enter your first name"
+        />
+        <Input
+          label="Last Name"
+          iconName="account-outline"
+          placeholder="Enter your last name"
+        />
+        <Input
+          label="Email"
+          iconName="email-outline"
+          placeholder="Enter your email"
+          keyboardType="email-address"
+        />
+        <Input
+          label="Password"
+          iconName="lock-outline"
+          placeholder="Enter your password"
+          password={true}
+        />
+        <Input
+          label="Confirm Password"
+          iconName="lock-outline"
+          placeholder="Enter your password again"
+          password={true}
+        />
         <Button
           icon={() => (
-            <Icon name="login-variant" size={24} color={Colors.textWhite} />
+            <Icon
+              name="account-check-outline"
+              size={24}
+              color={Colors.textWhite}
+            />
           )}
           mode="contained"
           style={{
@@ -57,14 +73,14 @@ export function LoginScreen({navigation}) {
             borderRadius: 4,
             height: 50,
             justifyContent: 'center',
-            marginBottom: '10%',
+            marginBottom: '4%',
           }}
           labelStyle={{
             fontSize: 20,
             alignSelf: 'center',
             marginTop: '8%',
           }}>
-          Login
+          Register
         </Button>
         <View
           style={{
@@ -76,42 +92,19 @@ export function LoginScreen({navigation}) {
           <Text
             variant="titleMedium"
             style={{color: Colors.textPrimary, textAlign: 'center'}}>
-            Forgot your password?
-          </Text>
-          <Button mode="text" style={{marginTop: '1%'}}>
-            <Text
-              variant="titleMedium"
-              style={{
-                color: Colors.accentPrimary,
-                fontWeight: 'bold',
-              }}>
-              Reset Password
-            </Text>
-          </Button>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text
-            variant="titleMedium"
-            style={{color: Colors.textPrimary, textAlign: 'center'}}>
-            Don't have an account?
+            Already have an account?
           </Text>
           <Button
             mode="text"
             style={{marginTop: '1%'}}
-            onPress={() => navigation.navigate('RegisterScreen')}>
+            onPress={() => navigation.navigate('LoginScreen')}>
             <Text
               variant="titleMedium"
               style={{
                 color: Colors.accentPrimary,
                 fontWeight: 'bold',
               }}>
-              Sign Up
+              Sign in
             </Text>
           </Button>
         </View>
