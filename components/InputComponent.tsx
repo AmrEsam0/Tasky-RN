@@ -1,14 +1,12 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
-import TextInputAffix from 'react-native-paper/lib/typescript/components/TextInput/Adornment/TextInputAffix';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../style/Colors';
 
 type Props = {
   label: string;
   iconName: string;
-  // password?: boolean;
+  password?: boolean;
   onFocus?: () => void;
   keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
   placeholder?: string;
@@ -20,8 +18,9 @@ type Props = {
 export const Input = (props: Props) => {
   const [isFocused, setIsFocused] = React.useState(false);
   const [inputText, setInputText] = React.useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
   return (
-    <View style={{marginBottom: '8%'}}>
+    <View style={{marginBottom: '4%'}}>
       <Text variant="labelLarge" style={{color: Colors.textPrimary}}>
         {props.label}
       </Text>
@@ -34,6 +33,7 @@ export const Input = (props: Props) => {
         onChangeText={inputText => setInputText(inputText)}
         placeholderTextColor={Colors.textAccented}
         style={{backgroundColor: Colors.backgroundAccented}}
+        secureTextEntry={showPassword ? false : props.password}
         onFocus={() => {
           props.onFocus;
           setIsFocused(true);
@@ -49,6 +49,18 @@ export const Input = (props: Props) => {
             }}
             onBlur={() => setIsFocused(false)}
           />
+        }
+        right={
+          props.password && (
+            <TextInput.Icon
+              forceTextInputFocus={false}
+              iconColor={Colors.textAccented}
+              icon={showPassword ? 'eye' : 'eye-off'}
+              onPress={() => {
+                setShowPassword(!showPassword);
+              }}
+            />
+          )
         }
       />
     </View>

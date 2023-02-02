@@ -23,8 +23,13 @@ export const LoginScreen = (props: Props) => {
         }}>
         <Text
           variant="displayLarge"
-          style={{color: Colors.accentDark, marginBottom: '36%'}}>
+          style={{color: Colors.accentDark, marginBottom: '12%'}}>
           Welcome Back!
+        </Text>
+        <Text
+          variant="displaySmall"
+          style={{color: Colors.accentDark, marginBottom: '8%'}}>
+          Login
         </Text>
         <View>
           <Input
@@ -37,6 +42,7 @@ export const LoginScreen = (props: Props) => {
             label="Password"
             iconName="lock-outline"
             placeholder="Enter your password"
+            password={true}
           />
         </View>
         <Button
@@ -46,7 +52,7 @@ export const LoginScreen = (props: Props) => {
           mode="contained"
           style={{
             backgroundColor: Colors.accentPrimary,
-            marginTop: '6%',
+            marginTop: '2%',
             width: '54%',
             alignSelf: 'center',
             borderRadius: 4,
@@ -61,6 +67,29 @@ export const LoginScreen = (props: Props) => {
           }}>
           Login
         </Button>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text
+            variant="titleMedium"
+            style={{color: Colors.textPrimary, textAlign: 'center'}}>
+            Forgot your password?
+          </Text>
+          <Button mode="text" style={{marginTop: '1%'}}>
+            <Text
+              variant="titleMedium"
+              style={{
+                color: Colors.accentPrimary,
+                fontWeight: 'bold',
+              }}>
+              Reset Password
+            </Text>
+          </Button>
+        </View>
         <View
           style={{
             flex: 1,
