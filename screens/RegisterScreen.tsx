@@ -1,17 +1,18 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, ScrollView, View} from 'react-native';
-import {Button, Text} from 'react-native-paper';
-import {Input} from '../components/InputComponent';
+import { SafeAreaView, ScrollView, View } from 'react-native';
+import { Button, Text } from 'react-native-paper';
+import { Input } from '../components/InputComponent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Colors} from '../style/Colors';
+import { Colors } from '../style/Colors';
+import { Fonts } from '../style/Fonts';
 
-export function RegisterScreen({navigation}) {
+export function RegisterScreen({ navigation }) {
   return (
     <SafeAreaView
       style={{
         width: '100%',
         height: '100%',
-        backgroundColor: Colors.bacgroundLight,
+        backgroundColor: Colors.backgroundDark,
       }}>
       <ScrollView
         contentContainerStyle={{
@@ -20,12 +21,20 @@ export function RegisterScreen({navigation}) {
         }}>
         <Text
           variant="displayLarge"
-          style={{color: Colors.accentDark, marginBottom: '6%'}}>
+          style={{
+            color: Colors.textPrimary,
+            marginBottom: '6%',
+            fontFamily: Fonts.TextBold,
+          }}>
           Welcome
         </Text>
         <Text
           variant="displaySmall"
-          style={{color: Colors.accentDark, marginBottom: '4%'}}>
+          style={{
+            color: Colors.textPrimary,
+            marginBottom: '4%',
+            fontFamily: 'Roboto-Medium',
+          }}>
           Register
         </Text>
         <Input
@@ -61,12 +70,12 @@ export function RegisterScreen({navigation}) {
             <Icon
               name="account-check-outline"
               size={24}
-              color={Colors.textWhite}
+              color={Colors.textDark}
             />
           )}
           mode="contained"
           style={{
-            backgroundColor: Colors.accentPrimary,
+            backgroundColor: Colors.backgroundLight,
             marginTop: '2%',
             width: '54%',
             alignSelf: 'center',
@@ -76,9 +85,11 @@ export function RegisterScreen({navigation}) {
             marginBottom: '4%',
           }}
           labelStyle={{
+            color: Colors.textDark,
             fontSize: 20,
             alignSelf: 'center',
             marginTop: '8%',
+            fontFamily: Fonts.TextMedium,
           }}>
           Register
         </Button>
@@ -91,18 +102,18 @@ export function RegisterScreen({navigation}) {
           }}>
           <Text
             variant="titleMedium"
-            style={{color: Colors.textPrimary, textAlign: 'center'}}>
+            style={{ fontFamily: Fonts.TextNormal, color: Colors.textPrimary, textAlign: 'center' }}>
             Already have an account?
           </Text>
           <Button
             mode="text"
-            style={{marginTop: '1%'}}
+            style={{ marginTop: '1%' }}
             onPress={() => navigation.navigate('LoginScreen')}>
             <Text
               variant="titleMedium"
               style={{
                 color: Colors.accentPrimary,
-                fontWeight: 'bold',
+                fontFamily: Fonts.TextBold,
               }}>
               Sign in
             </Text>

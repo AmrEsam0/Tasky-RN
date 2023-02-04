@@ -1,12 +1,10 @@
 export const Colors = {
-  textPrimary: '#1A1A1A',
-  textAccented: '#221446A9',
-  textWhite: '#fff',
-  bacgroundLight: '#EDEDED',
-  backgroundAccented: '#EEEAF7',
-  accentPrimary: '#5632AF',
-  accentDark: '#3C237A',
-  accentDarker: '#221446',
+  textPrimary: '#FDFDFD',
+  textGrey: '#666666',
+  textDark: '#0A0A0A',
+  backgroundLight: '#FDFDFD',
+  backgroundDark: '#0A0A0A',
+  accentPrimary: '#04e762',
 };
 
 // TODO: move to light green color as accent

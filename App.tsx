@@ -12,8 +12,8 @@ export default function App() {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-          statusBarColor: Colors.bacgroundLight,
-          statusBarStyle: 'dark',
+          statusBarColor: Colors.backgroundDark,
+          statusBarStyle: 'light',
           animation: 'fade_from_bottom',
         }}>
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />

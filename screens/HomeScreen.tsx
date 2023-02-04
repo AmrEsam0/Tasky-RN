@@ -18,7 +18,7 @@ export default function App() {
       <StatusBar
         barStyle={'dark-content'}
         translucent
-        backgroundColor={Colors.bacgroundLight}
+        backgroundColor={Colors.backgroundDark}
       />
     </View>
   );
