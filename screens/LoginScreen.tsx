@@ -1,13 +1,23 @@
-import React from 'react';
-import { StyleSheet, SafeAreaView, ScrollView, View } from 'react-native';
-import { Button, Text } from 'react-native-paper';
-import { Input } from '../components/InputComponent';
+import React, {useEffect, useRef} from 'react';
+import {SafeAreaView, ScrollView, View, Animated} from 'react-native';
+import {Button, Text} from 'react-native-paper';
+import {Input} from '../components/InputComponent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Colors } from '../style/Colors';
-import { Fonts } from '../style/Fonts';
+import {Colors} from '../style/Colors';
+import {Fonts} from '../style/Fonts';
 
 //TODO: extract components here and in RegisterScreen
-export function LoginScreen({ navigation }) {
+export function LoginScreen({navigation}) {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  useEffect(() => fadeIn());
   return (
     // {
     <SafeAreaView
@@ -21,14 +31,24 @@ export function LoginScreen({ navigation }) {
           paddingTop: '10%',
           paddingHorizontal: '4%',
         }}>
-        <Text
-          variant="displayLarge"
-          style={{ color: Colors.textPrimary, marginBottom: '12%', fontFamily: Fonts.TextBold }}>
-          Welcome Back!
-        </Text>
+        <Animated.View style={{opacity: fadeAnim}}>
+          <Text
+            variant="displayLarge"
+            style={{
+              color: Colors.textPrimary,
+              marginBottom: '12%',
+              fontFamily: Fonts.TextBold,
+            }}>
+            Welcome Back!
+          </Text>
+        </Animated.View>
         <Text
           variant="displaySmall"
-          style={{ color: Colors.textPrimary, marginBottom: '8%', fontFamily: Fonts.TextMedium }}>
+          style={{
+            color: Colors.textPrimary,
+            marginBottom: '8%',
+            fontFamily: Fonts.TextMedium,
+          }}>
           Login
         </Text>
         <View>
@@ -78,10 +98,14 @@ export function LoginScreen({ navigation }) {
           }}>
           <Text
             variant="titleMedium"
-            style={{ fontFamily: Fonts.TextNormal, color: Colors.textPrimary, textAlign: 'center' }}>
+            style={{
+              fontFamily: Fonts.TextNormal,
+              color: Colors.textPrimary,
+              textAlign: 'center',
+            }}>
             Forgot your password?
           </Text>
-          <Button mode="text" style={{ marginTop: '1%' }}>
+          <Button mode="text" style={{marginTop: '1%'}}>
             <Text
               variant="titleMedium"
               style={{
@@ -101,12 +125,16 @@ export function LoginScreen({ navigation }) {
           }}>
           <Text
             variant="titleMedium"
-            style={{ color: Colors.textPrimary, textAlign: 'center', fontFamily: Fonts.TextNormal }}>
+            style={{
+              color: Colors.textPrimary,
+              textAlign: 'center',
+              fontFamily: Fonts.TextNormal,
+            }}>
             Don't have an account?
           </Text>
           <Button
             mode="text"
-            style={{ marginTop: '1%' }}
+            style={{marginTop: '1%'}}
             onPress={() => navigation.navigate('RegisterScreen')}>
             <Text
               variant="titleMedium"
