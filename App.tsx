@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {Colors} from './style/Colors';
 import {LoginScreen} from './screens/LoginScreen';
 import {RegisterScreen} from './screens/RegisterScreen';
+import TaskScreen from './screens/TaskScreen';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -18,6 +19,7 @@ export default function App() {
         }}>
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        <Stack.Screen name="TaskScreen" component={TaskScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

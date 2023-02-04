@@ -12,7 +12,7 @@ export function LoginScreen({navigation}) {
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 1000,
+      duration: 1300,
       useNativeDriver: true,
     }).start();
   };
@@ -86,7 +86,8 @@ export function LoginScreen({navigation}) {
             marginTop: '8%',
             fontFamily: Fonts.TextMedium,
             color: Colors.textDark,
-          }}>
+          }}
+          onPress={() => navigation.navigate('TaskScreen')}>
           Login
         </Button>
         <View
