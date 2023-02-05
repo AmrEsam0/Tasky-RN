@@ -11,15 +11,16 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
+        initialRouteName="TaskScreen"
         screenOptions={{
           headerShown: false,
           statusBarColor: Colors.backgroundDark,
           statusBarStyle: 'light',
           animation: 'fade_from_bottom',
         }}>
-        <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="TaskScreen" component={TaskScreen} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

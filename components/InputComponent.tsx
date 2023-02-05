@@ -1,9 +1,8 @@
 import React from 'react';
-import { Platform, View } from 'react-native';
-import { Text, TextInput } from 'react-native-paper';
-import { fontConfig } from 'react-native-paper/lib/typescript/styles/fonts';
-import { Colors } from '../style/Colors';
-import { Fonts } from '../style/Fonts';
+import {View} from 'react-native';
+import {Text, TextInput} from 'react-native-paper';
+import {Colors} from '../style/Colors';
+import {Fonts} from '../style/Fonts';
 
 type Props = {
   label: string;
@@ -17,14 +16,15 @@ type Props = {
 
 // TODO: move styles down to the bottom of the file
 // TODO: move all styles to a separate file??
-// TODO: add the eye icon to the password input
 export const Input = (props: Props) => {
   const [isFocused, setIsFocused] = React.useState(false);
   const [inputText, setInputText] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   return (
-    <View style={{ marginBottom: '4%' }}>
-      <Text variant="labelLarge" style={{ fontFamily: Fonts.TextNormal, color: Colors.textPrimary }}>
+    <View style={{marginBottom: '4%'}}>
+      <Text
+        variant="labelLarge"
+        style={{fontFamily: Fonts.TextNormal, color: Colors.textPrimary}}>
         {props.label}
       </Text>
       <TextInput
@@ -36,7 +36,7 @@ export const Input = (props: Props) => {
         onChangeText={inputText => setInputText(inputText)}
         placeholderTextColor={Colors.textGrey}
         textColor={Colors.textPrimary}
-        style={{ backgroundColor: Colors.backgroundDark }}
+        style={{backgroundColor: Colors.backgroundDark}}
         activeOutlineColor={Colors.accentPrimary}
         secureTextEntry={showPassword ? false : props.password}
         onFocus={() => {
