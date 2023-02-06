@@ -18,7 +18,7 @@ const CustomBackground: React.FC<BottomSheetBackgroundProps> = ({
       [-1, 0],
       [Colors.backgroundDarkest, Colors.backgroundDarkest],
     ),
-    borderRadius: 20,
+    borderRadius: 26,
   }));
   const containerStyle = useMemo(
     () => [style, containerAnimatedStyle],
