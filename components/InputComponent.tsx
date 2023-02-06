@@ -21,7 +21,7 @@ export const Input = (props: Props) => {
   const [inputText, setInputText] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   return (
-    <View style={{marginBottom: '4%'}}>
+    <View style={{marginBottom: '4%', width: '96%', alignSelf: 'center'}}>
       <Text
         variant="labelLarge"
         style={{fontFamily: Fonts.TextNormal, color: Colors.textPrimary}}>
@@ -36,8 +36,8 @@ export const Input = (props: Props) => {
         onChangeText={inputText => setInputText(inputText)}
         placeholderTextColor={Colors.textGrey}
         textColor={Colors.textPrimary}
-        style={{backgroundColor: Colors.backgroundDark}}
-        activeOutlineColor={Colors.accentPrimary}
+        style={{backgroundColor: Colors.backgroundDarkest}}
+        activeOutlineColor={Colors.textAccent}
         secureTextEntry={showPassword ? false : props.password}
         onFocus={() => {
           props.onFocus;

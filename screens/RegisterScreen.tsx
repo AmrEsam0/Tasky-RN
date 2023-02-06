@@ -23,7 +23,7 @@ export function RegisterScreen({navigation}) {
       style={{
         width: '100%',
         height: '100%',
-        backgroundColor: Colors.backgroundDark,
+        backgroundColor: Colors.backgroundDarkest,
       }}>
       <ScrollView
         contentContainerStyle={{
@@ -129,7 +129,7 @@ export function RegisterScreen({navigation}) {
             <Text
               variant="titleMedium"
               style={{
-                color: Colors.accentPrimary,
+                color: Colors.textAccent,
                 fontFamily: Fonts.TextBold,
               }}>
               Sign in

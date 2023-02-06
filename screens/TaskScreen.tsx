@@ -1,6 +1,8 @@
-import React from 'react';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import React, {useRef, useState} from 'react';
 import {ScrollView, SafeAreaView, View} from 'react-native';
-import {Text} from 'react-native-paper';
+import {Button, FAB, Text} from 'react-native-paper';
+import MyBottomSheet from '../components/BottomSheetComponent';
 import TaskComponent from '../components/TaskComponent';
 
 import {Colors} from '../style/Colors';
@@ -8,12 +10,18 @@ import {Fonts} from '../style/Fonts';
 
 //TODO: LANDING PAGE, YO!
 export default function TaskScreen() {
+  const [clicked, setClicked] = useState(false);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  const handlePresentModal = () => {
+    bottomSheetModalRef.current?.present();
+  };
   return (
     <SafeAreaView
       style={{
         width: '100%',
         height: '100%',
-        backgroundColor: Colors.backgroundDark,
+        backgroundColor: Colors.backgroundDarkest,
         paddingTop: '10%',
         paddingHorizontal: '4%',
       }}>
@@ -41,12 +49,25 @@ export default function TaskScreen() {
           }}
         />
       </View>
-
       <ScrollView>
         <TaskComponent />
         <TaskComponent />
         <TaskComponent />
       </ScrollView>
+
+      <FAB
+        icon="plus"
+        style={{
+          position: 'absolute',
+          bottom: '4%',
+          alignSelf: 'center',
+          backgroundColor: Colors.backgroundAccent,
+        }}
+        label="New Task"
+        color={Colors.textPrimary}
+        onPress={() => handlePresentModal()}
+      />
+      <MyBottomSheet bottomSheetModalRef={bottomSheetModalRef} />
     </SafeAreaView>
   );
 }
