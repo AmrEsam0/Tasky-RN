@@ -8,7 +8,6 @@ import {
 import {Colors} from '../style/Colors';
 import CustomBackground from './CustomBackground';
 import {Input} from './InputComponent';
-import {TextInput} from 'react-native-paper';
 
 type Props = {
   bottomSheetModalRef: any;

@@ -1,0 +1,665 @@
+diff --git a/node_modules/react-native-ui-lib/.eslintrc.js b/node_modules/react-native-ui-lib/.eslintrc.js
+index acde2df..cd4e3e3 100644
+--- a/node_modules/react-native-ui-lib/.eslintrc.js
++++ b/node_modules/react-native-ui-lib/.eslintrc.js
+@@ -1,5 +1,5 @@
+ module.exports = {
+-  extends: ['plugin:@typescript-eslint/recommended', 'wix/react-native', 'plugin:react-hooks/recommended'],
++  extends: ['plugin:@typescript-eslint/recommended', 'plugin:react-native/all', 'plugin:react-hooks/recommended'],
+   parser: '@typescript-eslint/parser',
+   // plugins: ['@typescript-eslint'],
+   rules: {
+diff --git a/node_modules/react-native-ui-lib/src/commons/asBaseComponent.d.ts b/node_modules/react-native-ui-lib/src/commons/asBaseComponent.d.ts
+index 60c0aed..ef03892 100644
+--- a/node_modules/react-native-ui-lib/src/commons/asBaseComponent.d.ts
++++ b/node_modules/react-native-ui-lib/src/commons/asBaseComponent.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import * as Modifiers from './modifiers';
++import { ThemeComponent } from '../../typings/globalTypes';
+ export interface BaseComponentInjectedProps {
+     /**
+      * All generated styles from the modifiers props
+diff --git a/node_modules/react-native-ui-lib/src/components/actionBar/index.d.ts b/node_modules/react-native-ui-lib/src/components/actionBar/index.d.ts
+index 86084d3..8f90962 100644
+--- a/node_modules/react-native-ui-lib/src/components/actionBar/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/actionBar/index.d.ts
+@@ -1,6 +1,7 @@
+ import React from 'react';
+ import { ViewStyle } from 'react-native';
+ import { ButtonProps } from '../button';
++import { ThemeComponent } from 'react-native-ui-lib/typings';
+ export declare type ActionBarProps = {
+     /**
+      * action bar height
+diff --git a/node_modules/react-native-ui-lib/src/components/actionSheet/index.d.ts b/node_modules/react-native-ui-lib/src/components/actionSheet/index.d.ts
+index 9388e7c..2722be5 100644
+--- a/node_modules/react-native-ui-lib/src/components/actionSheet/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/actionSheet/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, ViewStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { DialogProps } from '../dialog';
+ import { ButtonProps } from '../button';
+ import { DialogProps as IncubatorDialogProps } from '../../incubator';
+diff --git a/node_modules/react-native-ui-lib/src/components/badge/index.d.ts b/node_modules/react-native-ui-lib/src/components/badge/index.d.ts
+index 1938a55..7f8e214 100644
+--- a/node_modules/react-native-ui-lib/src/components/badge/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/badge/index.d.ts
+@@ -1,5 +1,6 @@
+ import React, { PureComponent } from 'react';
+ import { ImageSourcePropType, ImageStyle, StyleProp, TextStyle, TouchableOpacityProps, ViewStyle, ViewProps } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ declare const LABEL_FORMATTER_VALUES: readonly [1, 2, 3, 4];
+ declare type LabelFormatterValues = typeof LABEL_FORMATTER_VALUES[number];
+ export declare type BadgeProps = ViewProps & TouchableOpacityProps & {
+diff --git a/node_modules/react-native-ui-lib/src/components/button/index.d.ts b/node_modules/react-native-ui-lib/src/components/button/index.d.ts
+index cb19085..fde3ead 100644
+--- a/node_modules/react-native-ui-lib/src/components/button/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/button/index.d.ts
+@@ -1,5 +1,6 @@
+ import React, { PureComponent } from 'react';
+ import { LayoutChangeEvent, ImageStyle, TextStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ButtonSize, ButtonAnimationDirection, ButtonProps, ButtonState, Props } from './ButtonTypes';
+ export { ButtonSize, ButtonAnimationDirection, ButtonProps };
+ declare class Button extends PureComponent<Props, ButtonState> {
+diff --git a/node_modules/react-native-ui-lib/src/components/card/CardSection.d.ts b/node_modules/react-native-ui-lib/src/components/card/CardSection.d.ts
+index ab047a7..33092db 100644
+--- a/node_modules/react-native-ui-lib/src/components/card/CardSection.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/card/CardSection.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { ViewStyle, ImageStyle, ImageSourcePropType, StyleProp } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ViewProps } from '../view';
+ import { TextProps } from '../text';
+ import { ImageProps } from '../image';
+diff --git a/node_modules/react-native-ui-lib/src/components/card/index.d.ts b/node_modules/react-native-ui-lib/src/components/card/index.d.ts
+index 37b1e05..abbc3a6 100644
+--- a/node_modules/react-native-ui-lib/src/components/card/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/card/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { ViewStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ViewProps } from '../view';
+ import { TouchableOpacityProps } from '../touchableOpacity';
+ import CardImage from './CardImage';
+diff --git a/node_modules/react-native-ui-lib/src/components/carousel/index.d.ts b/node_modules/react-native-ui-lib/src/components/carousel/index.d.ts
+index d407886..c71f0cb 100644
+--- a/node_modules/react-native-ui-lib/src/components/carousel/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/carousel/index.d.ts
+@@ -1,5 +1,6 @@
+ import React, { Component, RefObject, ReactNode, Key } from 'react';
+ import { ScrollView, LayoutChangeEvent, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { CarouselProps, CarouselState, PageControlPosition } from './types';
+ export { CarouselProps, PageControlPosition };
+ declare type DefaultProps = Partial<CarouselProps>;
+diff --git a/node_modules/react-native-ui-lib/src/components/checkbox/index.d.ts b/node_modules/react-native-ui-lib/src/components/checkbox/index.d.ts
+index 45f0caf..47c9510 100644
+--- a/node_modules/react-native-ui-lib/src/components/checkbox/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/checkbox/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, TouchableOpacityProps, ViewStyle, TextStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { TextProps } from '../text';
+ export interface CheckboxProps extends TouchableOpacityProps {
+     /**
+diff --git a/node_modules/react-native-ui-lib/src/components/chip/index.d.ts b/node_modules/react-native-ui-lib/src/components/chip/index.d.ts
+index 11173a4..ee452c8 100644
+--- a/node_modules/react-native-ui-lib/src/components/chip/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/chip/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { AvatarProps } from '../avatar';
+ import { BadgeProps } from '../badge';
+ import { TouchableOpacityProps } from '../touchableOpacity';
+diff --git a/node_modules/react-native-ui-lib/src/components/chipsInput/index.d.ts b/node_modules/react-native-ui-lib/src/components/chipsInput/index.d.ts
+index 010f471..7a26693 100644
+--- a/node_modules/react-native-ui-lib/src/components/chipsInput/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/chipsInput/index.d.ts
+@@ -1,9 +1,10 @@
+ import _ from 'lodash';
+ import React, { Component } from 'react';
+ import { ViewStyle, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, ScrollView, ScrollViewProps, TextInputProps as RNTextInputProps } from 'react-native';
++import { TextFieldProps } from '../../../typings/components/Inputs';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { BaseComponentInjectedProps, TypographyModifiers } from '../../commons/new';
+ import { ChipProps } from '../chip';
+-import { TextFieldProps } from '../../../typings/components/Inputs';
+ declare type ChipType = string | boolean | any;
+ export declare type ChipsInputChipProps = ChipProps & {
+     invalid?: boolean;
+diff --git a/node_modules/react-native-ui-lib/src/components/colorPicker/ColorPickerDialog.d.ts b/node_modules/react-native-ui-lib/src/components/colorPicker/ColorPickerDialog.d.ts
+index 78a39c7..1cf1557 100644
+--- a/node_modules/react-native-ui-lib/src/components/colorPicker/ColorPickerDialog.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/colorPicker/ColorPickerDialog.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, ViewStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { DialogProps } from '../dialog';
+ interface Props extends DialogProps {
+     /**
+diff --git a/node_modules/react-native-ui-lib/src/components/connectionStatusBar/index.d.ts b/node_modules/react-native-ui-lib/src/components/connectionStatusBar/index.d.ts
+index a0c0e2f..bf5f9bd 100644
+--- a/node_modules/react-native-ui-lib/src/components/connectionStatusBar/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/connectionStatusBar/index.d.ts
+@@ -1,4 +1,5 @@
+ import React, { PureComponent } from 'react';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ConnectionStatusBarProps, ConnectionStatusBarState } from './Types';
+ export { ConnectionStatusBarProps };
+ /**
+diff --git a/node_modules/react-native-ui-lib/src/components/dateTimePicker/index.d.ts b/node_modules/react-native-ui-lib/src/components/dateTimePicker/index.d.ts
+index 7ed1ef7..54399e1 100644
+--- a/node_modules/react-native-ui-lib/src/components/dateTimePicker/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/dateTimePicker/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, ViewStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { BaseComponentInjectedProps } from '../../commons/new';
+ import { DialogProps } from '../dialog';
+ import type { TextFieldProps } from '../../incubator/TextField';
+diff --git a/node_modules/react-native-ui-lib/src/components/dialog/index.d.ts b/node_modules/react-native-ui-lib/src/components/dialog/index.d.ts
+index ec52549..c2b7d7c 100644
+--- a/node_modules/react-native-ui-lib/src/components/dialog/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/dialog/index.d.ts
+@@ -3,6 +3,7 @@ import { StyleProp, ViewStyle, ModalPropsIOS, AccessibilityProps } from 'react-n
+ import { AlignmentModifiers } from '../../commons/modifiers';
+ import { ModalProps } from '../modal';
+ import { PanningDirections, PanningDirectionsEnum } from '../panningViews/panningProvider';
++import { ThemeComponent } from 'react-native-ui-lib/typings';
+ export { PanningDirections as DialogDirections, PanningDirectionsEnum as DialogDirectionsEnum };
+ interface RNPartialProps extends Pick<ModalPropsIOS, 'supportedOrientations'>, Pick<AccessibilityProps, 'accessibilityLabel'> {
+ }
+diff --git a/node_modules/react-native-ui-lib/src/components/drawer/index.d.ts b/node_modules/react-native-ui-lib/src/components/drawer/index.d.ts
+index d1d60df..63f8076 100644
+--- a/node_modules/react-native-ui-lib/src/components/drawer/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/drawer/index.d.ts
+@@ -1,5 +1,6 @@
+ import React, { PureComponent, ReactNode, RefObject } from 'react';
+ import { Animated, ViewStyle, TextStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import Swipeable, { SwipeableProps } from './Swipeable';
+ interface DrawerItemProps {
+     width?: number;
+diff --git a/node_modules/react-native-ui-lib/src/components/featureHighlight/index.d.ts b/node_modules/react-native-ui-lib/src/components/featureHighlight/index.d.ts
+index 73469d7..17671e0 100644
+--- a/node_modules/react-native-ui-lib/src/components/featureHighlight/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/featureHighlight/index.d.ts
+@@ -1,5 +1,6 @@
+ import React, { Component, ElementRef } from 'react';
+ import { Animated, StyleProp, TextStyle, TouchableWithoutFeedbackProps, LayoutChangeEvent } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ButtonProps } from '../button';
+ import { PageControlProps } from '../pageControl';
+ export declare type HighlightFrame = {
+diff --git a/node_modules/react-native-ui-lib/src/components/floatingButton/index.d.ts b/node_modules/react-native-ui-lib/src/components/floatingButton/index.d.ts
+index 4fb1389..9eeca57 100644
+--- a/node_modules/react-native-ui-lib/src/components/floatingButton/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/floatingButton/index.d.ts
+@@ -1,5 +1,6 @@
+ import React, { PropsWithChildren, PureComponent } from 'react';
+ import { Animated } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ButtonProps } from '../button';
+ export declare enum FloatingButtonLayouts {
+     VERTICAL = "Vertical",
+diff --git a/node_modules/react-native-ui-lib/src/components/hint/index.d.ts b/node_modules/react-native-ui-lib/src/components/hint/index.d.ts
+index d7a121c..8cf5f9d 100644
+--- a/node_modules/react-native-ui-lib/src/components/hint/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/hint/index.d.ts
+@@ -1,5 +1,6 @@
+ import React, { Component, ReactElement, ElementRef } from 'react';
+ import { Animated, GestureResponderEvent, ImageSourcePropType, ImageStyle, StyleProp, TextStyle, ViewStyle, LayoutChangeEvent, View as RNView } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ declare enum TARGET_POSITIONS {
+     LEFT = "left",
+     RIGHT = "right",
+diff --git a/node_modules/react-native-ui-lib/src/components/icon/index.d.ts b/node_modules/react-native-ui-lib/src/components/icon/index.d.ts
+index 325ccad..252c1b9 100644
+--- a/node_modules/react-native-ui-lib/src/components/icon/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/icon/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { ImageProps } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { BaseComponentInjectedProps, MarginModifiers } from '../../commons/new';
+ export declare type IconProps = ImageProps & MarginModifiers & {
+     /**
+diff --git a/node_modules/react-native-ui-lib/src/components/image/index.d.ts b/node_modules/react-native-ui-lib/src/components/image/index.d.ts
+index 6fd5c09..5a57b5e 100644
+--- a/node_modules/react-native-ui-lib/src/components/image/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/image/index.d.ts
+@@ -1,6 +1,7 @@
+ import React, { PureComponent } from 'react';
+ import { ImageProps as RNImageProps, NativeSyntheticEvent, ImageErrorEventData } from 'react-native';
+ import { ImagePropTypes } from 'deprecated-react-native-prop-types';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ForwardRefInjectedProps, BaseComponentInjectedProps, MarginModifiers } from '../../commons/new';
+ import { OverlayTypeType, OverlayIntensityType } from '../overlay';
+ export declare type ImageProps = RNImageProps & MarginModifiers & {
+diff --git a/node_modules/react-native-ui-lib/src/components/listItem/ListItemPart.d.ts b/node_modules/react-native-ui-lib/src/components/listItem/ListItemPart.d.ts
+index 08bd148..40bf669 100644
+--- a/node_modules/react-native-ui-lib/src/components/listItem/ListItemPart.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/listItem/ListItemPart.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { ViewStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ListItemPartProps } from './types';
+ export { ListItemPartProps };
+ declare const _default: React.ComponentClass<{
+diff --git a/node_modules/react-native-ui-lib/src/components/listItem/index.d.ts b/node_modules/react-native-ui-lib/src/components/listItem/index.d.ts
+index 19410c2..3d98ddf 100644
+--- a/node_modules/react-native-ui-lib/src/components/listItem/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/listItem/index.d.ts
+@@ -1,4 +1,5 @@
+ import React, { Component } from 'react';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import ListItemPart from './ListItemPart';
+ import { ListItemProps } from './types';
+ declare type ListItemState = {
+diff --git a/node_modules/react-native-ui-lib/src/components/loaderScreen/index.d.ts b/node_modules/react-native-ui-lib/src/components/loaderScreen/index.d.ts
+index 8167d8a..b7b2d3b 100644
+--- a/node_modules/react-native-ui-lib/src/components/loaderScreen/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/loaderScreen/index.d.ts
+@@ -1,4 +1,5 @@
+ import React from 'react';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { LoaderScreenProps } from './types';
+ export { LoaderScreenProps };
+ declare const _default: React.ComponentClass<import("react-native").ActivityIndicatorProps & {
+diff --git a/node_modules/react-native-ui-lib/src/components/modal/TopBar.d.ts b/node_modules/react-native-ui-lib/src/components/modal/TopBar.d.ts
+index 7f68ab2..4343e5f 100644
+--- a/node_modules/react-native-ui-lib/src/components/modal/TopBar.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/modal/TopBar.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, TextStyle, ImageSourcePropType } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ViewProps } from '../../components/view';
+ import { ButtonProps } from '../../components/button';
+ export interface ModalTopBarProps {
+diff --git a/node_modules/react-native-ui-lib/src/components/modal/index.d.ts b/node_modules/react-native-ui-lib/src/components/modal/index.d.ts
+index 694c89d..eb125e4 100644
+--- a/node_modules/react-native-ui-lib/src/components/modal/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/modal/index.d.ts
+@@ -1,5 +1,6 @@
+ import React, { Component } from 'react';
+ import { ModalProps as RNModalProps, GestureResponderEvent, KeyboardAvoidingViewProps } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import TopBar, { ModalTopBarProps } from './TopBar';
+ export { ModalTopBarProps };
+ export interface ModalProps extends RNModalProps {
+diff --git a/node_modules/react-native-ui-lib/src/components/numberInput/index.d.ts b/node_modules/react-native-ui-lib/src/components/numberInput/index.d.ts
+index f516ab8..cfef184 100644
+--- a/node_modules/react-native-ui-lib/src/components/numberInput/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/numberInput/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, ViewStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { TextFieldProps } from '../../incubator/TextField';
+ import { NumberInputData } from './Presenter';
+ export { NumberInputData };
+diff --git a/node_modules/react-native-ui-lib/src/components/pageControl/index.d.ts b/node_modules/react-native-ui-lib/src/components/pageControl/index.d.ts
+index d87df93..14d4b63 100644
+--- a/node_modules/react-native-ui-lib/src/components/pageControl/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/pageControl/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, ViewStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ export interface PageControlProps {
+     /**
+      * Limit the number of page indicators shown.
+diff --git a/node_modules/react-native-ui-lib/src/components/panningViews/panGestureView.d.ts b/node_modules/react-native-ui-lib/src/components/panningViews/panGestureView.d.ts
+index 0269812..b57de5c 100644
+--- a/node_modules/react-native-ui-lib/src/components/panningViews/panGestureView.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/panningViews/panGestureView.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, ViewStyle } from 'react-native';
++import { ThemeComponent } from 'react-native-ui-lib/typings';
+ export declare enum GestureDirections {
+     UP = "up",
+     DOWN = "down"
+diff --git a/node_modules/react-native-ui-lib/src/components/picker/types.d.ts b/node_modules/react-native-ui-lib/src/components/picker/types.d.ts
+index 79fcdbb..eee3998 100644
+--- a/node_modules/react-native-ui-lib/src/components/picker/types.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/picker/types.d.ts
+@@ -3,6 +3,7 @@ import { FlatListProps, StyleProp, ViewStyle, TextStyle } from 'react-native';
+ import { ExpandableOverlayProps, ExpandableOverlayMethods } from '../../incubator/expandableOverlay';
+ import { ModalTopBarProps } from '../modal/TopBar';
+ import { TextFieldProps } from '../../../typings/components/Inputs';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { TextFieldMethods, TextFieldProps as NewTextFieldProps } from '../../incubator/TextField';
+ export declare enum PickerModes {
+     SINGLE = "SINGLE",
+diff --git a/node_modules/react-native-ui-lib/src/components/progressBar/index.d.ts b/node_modules/react-native-ui-lib/src/components/progressBar/index.d.ts
+index 0f857b0..3e1115f 100644
+--- a/node_modules/react-native-ui-lib/src/components/progressBar/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/progressBar/index.d.ts
+@@ -1,5 +1,6 @@
+ import React, { PureComponent } from 'react';
+ import { Animated, StyleProp, ViewStyle, LayoutChangeEvent } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ /**
+  * @description: Progress bar
+  * @example:https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressBarScreen.tsx
+diff --git a/node_modules/react-native-ui-lib/src/components/radioButton/index.d.ts b/node_modules/react-native-ui-lib/src/components/radioButton/index.d.ts
+index c81d158..c9b29b9 100644
+--- a/node_modules/react-native-ui-lib/src/components/radioButton/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/radioButton/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { TextStyle, StyleProp, ImageSourcePropType, ImageStyle, ViewStyle, ViewProps } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { RadioGroupContextProps } from '../radioGroup/RadioGroupContext';
+ export declare type RadioButtonProps = RadioGroupContextProps & ViewProps & {
+     /**
+diff --git a/node_modules/react-native-ui-lib/src/components/radioGroup/index.d.ts b/node_modules/react-native-ui-lib/src/components/radioGroup/index.d.ts
+index 6721260..ace9a91 100644
+--- a/node_modules/react-native-ui-lib/src/components/radioGroup/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/radioGroup/index.d.ts
+@@ -1,4 +1,5 @@
+ import React, { PureComponent, GetDerivedStateFromProps } from 'react';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { BaseComponentInjectedProps, ForwardRefInjectedProps } from '../../commons/new';
+ import { ViewProps } from '../view';
+ export declare type RadioGroupProps = ViewProps & {
+diff --git a/node_modules/react-native-ui-lib/src/components/scrollBar/index.d.ts b/node_modules/react-native-ui-lib/src/components/scrollBar/index.d.ts
+index ddde27c..75d5f5d 100644
+--- a/node_modules/react-native-ui-lib/src/components/scrollBar/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/scrollBar/index.d.ts
+@@ -1,5 +1,6 @@
+ import React, { Component } from 'react';
+ import { Animated, FlatListProps, ImageSourcePropType, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ForwardRefInjectedProps } from '../../commons/new';
+ export interface ScrollBarProps extends FlatListProps<any> {
+     /**
+diff --git a/node_modules/react-native-ui-lib/src/components/sectionsWheelPicker/index.d.ts b/node_modules/react-native-ui-lib/src/components/sectionsWheelPicker/index.d.ts
+index 9cbde35..260a90a 100644
+--- a/node_modules/react-native-ui-lib/src/components/sectionsWheelPicker/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/sectionsWheelPicker/index.d.ts
+@@ -1,6 +1,7 @@
+ import React from 'react';
+ import { TextStyle } from 'react-native';
+ import { WheelPickerProps } from '../../incubator';
++import { ThemeComponent } from 'react-native-ui-lib/typings';
+ export declare type SectionsWheelPickerProps = {
+     /**
+      * Array of sections.
+diff --git a/node_modules/react-native-ui-lib/src/components/segmentedControl/index.d.ts b/node_modules/react-native-ui-lib/src/components/segmentedControl/index.d.ts
+index e66ed9c..e904578 100644
+--- a/node_modules/react-native-ui-lib/src/components/segmentedControl/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/segmentedControl/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, ViewStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { SegmentedControlItemProps as SegmentProps } from './segment';
+ export declare type SegmentedControlItemProps = SegmentProps;
+ export declare type SegmentedControlProps = {
+diff --git a/node_modules/react-native-ui-lib/src/components/segmentedControl/segment.d.ts b/node_modules/react-native-ui-lib/src/components/segmentedControl/segment.d.ts
+index 697cfb7..e61c4b3 100644
+--- a/node_modules/react-native-ui-lib/src/components/segmentedControl/segment.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/segmentedControl/segment.d.ts
+@@ -1,6 +1,7 @@
+ import React from 'react';
+ import { LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp } from 'react-native';
+ import Reanimated from 'react-native-reanimated';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ export declare type SegmentedControlItemProps = {
+     /**
+      * The label of the segment.
+diff --git a/node_modules/react-native-ui-lib/src/components/slider/ColorSliderGroup.d.ts b/node_modules/react-native-ui-lib/src/components/slider/ColorSliderGroup.d.ts
+index 700ad13..42c9fc4 100644
+--- a/node_modules/react-native-ui-lib/src/components/slider/ColorSliderGroup.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/slider/ColorSliderGroup.d.ts
+@@ -1,5 +1,6 @@
+ import React, { PureComponent, GetDerivedStateFromProps } from 'react';
+ import { StyleProp, ViewStyle, TextStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { GradientSliderTypes } from './GradientSlider';
+ declare type SliderOnValueChange = (value: string) => void;
+ export declare type ColorSliderGroupProps = {
+diff --git a/node_modules/react-native-ui-lib/src/components/slider/GradientSlider.d.ts b/node_modules/react-native-ui-lib/src/components/slider/GradientSlider.d.ts
+index 1b6f341..2ec399b 100644
+--- a/node_modules/react-native-ui-lib/src/components/slider/GradientSlider.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/slider/GradientSlider.d.ts
+@@ -1,6 +1,7 @@
+ import tinycolor from 'tinycolor2';
+ import React, { Component } from 'react';
+ import { StyleProp, ViewStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ForwardRefInjectedProps } from '../../commons/new';
+ import { SliderProps } from './index';
+ import { SliderContextProps } from './context/SliderContext';
+diff --git a/node_modules/react-native-ui-lib/src/components/stackAggregator/index.d.ts b/node_modules/react-native-ui-lib/src/components/stackAggregator/index.d.ts
+index a3d4c77..ec7d81e 100644
+--- a/node_modules/react-native-ui-lib/src/components/stackAggregator/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/stackAggregator/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, ViewStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ViewProps } from '../view';
+ import { ButtonProps } from '../button';
+ export declare type StackAggregatorProps = ViewProps & {
+diff --git a/node_modules/react-native-ui-lib/src/components/stateScreen/index.d.ts b/node_modules/react-native-ui-lib/src/components/stateScreen/index.d.ts
+index 65bd9a9..39b18d6 100644
+--- a/node_modules/react-native-ui-lib/src/components/stateScreen/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/stateScreen/index.d.ts
+@@ -1,4 +1,5 @@
+ import React from 'react';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { StateScreenProps } from './types';
+ export { StateScreenProps };
+ declare const _default: React.ComponentClass<StateScreenProps & ThemeComponent, any>;
+diff --git a/node_modules/react-native-ui-lib/src/components/stepper/index.d.ts b/node_modules/react-native-ui-lib/src/components/stepper/index.d.ts
+index 512bcf0..26dd055 100644
+--- a/node_modules/react-native-ui-lib/src/components/stepper/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/stepper/index.d.ts
+@@ -1,4 +1,5 @@
+ import React from 'react';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ interface Props {
+     /**
+      * Stepper value.
+diff --git a/node_modules/react-native-ui-lib/src/components/switch/index.d.ts b/node_modules/react-native-ui-lib/src/components/switch/index.d.ts
+index eb9fd54..f5cf7d5 100644
+--- a/node_modules/react-native-ui-lib/src/components/switch/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/switch/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, ViewStyle, ColorValue } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ export declare type SwitchProps = {
+     /**
+      * The value of the switch. If true the switch will be turned on. Default value is false
+diff --git a/node_modules/react-native-ui-lib/src/components/tabBar/TabBarItem.d.ts b/node_modules/react-native-ui-lib/src/components/tabBar/TabBarItem.d.ts
+index fe14a35..cba9204 100644
+--- a/node_modules/react-native-ui-lib/src/components/tabBar/TabBarItem.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/tabBar/TabBarItem.d.ts
+@@ -1,5 +1,6 @@
+ import React, { ReactElement } from 'react';
+ import { StyleProp, ViewStyle, TextStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { BadgeProps } from '../badge';
+ export interface TabBarItemProps {
+     /**
+diff --git a/node_modules/react-native-ui-lib/src/components/tabBar/index.d.ts b/node_modules/react-native-ui-lib/src/components/tabBar/index.d.ts
+index 00f4df0..190d545 100644
+--- a/node_modules/react-native-ui-lib/src/components/tabBar/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/tabBar/index.d.ts
+@@ -1,5 +1,6 @@
+ import React, { Component, ElementRef, RefObject } from 'react';
+ import { ScrollView, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ScrollBarProps } from '../scrollBar';
+ import TabBarItem, { TabBarItemProps } from './TabBarItem';
+ export declare type TabBarProps = ScrollBarProps & {
+diff --git a/node_modules/react-native-ui-lib/src/components/tabController/TabBar.d.ts b/node_modules/react-native-ui-lib/src/components/tabController/TabBar.d.ts
+index 9bf424b..8715f7b 100644
+--- a/node_modules/react-native-ui-lib/src/components/tabController/TabBar.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/tabController/TabBar.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, ViewStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { TabControllerItemProps } from './TabBarItem';
+ import { FaderProps } from '../fader';
+ export interface TabControllerBarProps {
+diff --git a/node_modules/react-native-ui-lib/src/components/text/index.d.ts b/node_modules/react-native-ui-lib/src/components/text/index.d.ts
+index b490586..67c2243 100644
+--- a/node_modules/react-native-ui-lib/src/components/text/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/text/index.d.ts
+@@ -1,5 +1,6 @@
+ import React, { PureComponent } from 'react';
+ import { TextProps as RNTextProps, TextStyle, Animated, StyleProp } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { BaseComponentInjectedProps, ForwardRefInjectedProps, MarginModifiers, TypographyModifiers, ColorsModifiers, FlexModifiers } from '../../commons/new';
+ export declare type TextProps = RNTextProps & TypographyModifiers & ColorsModifiers & MarginModifiers & FlexModifiers & {
+     /**
+diff --git a/node_modules/react-native-ui-lib/src/components/touchableOpacity/index.d.ts b/node_modules/react-native-ui-lib/src/components/touchableOpacity/index.d.ts
+index d91e8bb..e67f7f6 100644
+--- a/node_modules/react-native-ui-lib/src/components/touchableOpacity/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/touchableOpacity/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { TouchableOpacityProps as RNTouchableOpacityProps } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ContainerModifiers } from '../../commons/new';
+ import { ViewProps } from '../view';
+ export interface TouchableOpacityProps extends Omit<RNTouchableOpacityProps, 'style' | 'onPress' | 'onPressIn' | 'onPressOut' | 'onLongPress'>, ContainerModifiers {
+diff --git a/node_modules/react-native-ui-lib/src/components/wizard/WizardStep.d.ts b/node_modules/react-native-ui-lib/src/components/wizard/WizardStep.d.ts
+index 7c59ccb..22d4d5a 100644
+--- a/node_modules/react-native-ui-lib/src/components/wizard/WizardStep.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/wizard/WizardStep.d.ts
+@@ -1,4 +1,5 @@
+ import React from 'react';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { WizardStepProps } from './types';
+ declare const _default: React.ComponentClass<WizardStepProps & ThemeComponent, any>;
+ export default _default;
+diff --git a/node_modules/react-native-ui-lib/src/components/wizard/index.d.ts b/node_modules/react-native-ui-lib/src/components/wizard/index.d.ts
+index 198337e..8585a2c 100644
+--- a/node_modules/react-native-ui-lib/src/components/wizard/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/components/wizard/index.d.ts
+@@ -1,4 +1,5 @@
+ import React, { Component } from 'react';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import WizardStep from './WizardStep';
+ import { WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig } from './types';
+ export { WizardProps, WizardStepProps, WizardStepStates, WizardStepConfig, WizardStepsConfig };
+diff --git a/node_modules/react-native-ui-lib/src/incubator/Dialog/DialogHeader.d.ts b/node_modules/react-native-ui-lib/src/incubator/Dialog/DialogHeader.d.ts
+index 49f638a..f3ce9e3 100644
+--- a/node_modules/react-native-ui-lib/src/incubator/Dialog/DialogHeader.d.ts
++++ b/node_modules/react-native-ui-lib/src/incubator/Dialog/DialogHeader.d.ts
+@@ -1,4 +1,5 @@
+ import React from 'react';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { DialogHeaderProps } from './types';
+ declare const _default: React.ComponentClass<DialogHeaderProps & ThemeComponent, any>;
+ export default _default;
+diff --git a/node_modules/react-native-ui-lib/src/incubator/Dialog/index.d.ts b/node_modules/react-native-ui-lib/src/incubator/Dialog/index.d.ts
+index efce385..b4c8c81 100644
+--- a/node_modules/react-native-ui-lib/src/incubator/Dialog/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/incubator/Dialog/index.d.ts
+@@ -1,4 +1,5 @@
+ import React from 'react';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import DialogHeader from './DialogHeader';
+ import { DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps } from './types';
+ export { DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps };
+diff --git a/node_modules/react-native-ui-lib/src/incubator/TextField/index.d.ts b/node_modules/react-native-ui-lib/src/incubator/TextField/index.d.ts
+index 04cc32b..f3d314f 100644
+--- a/node_modules/react-native-ui-lib/src/incubator/TextField/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/incubator/TextField/index.d.ts
+@@ -6,6 +6,7 @@
+  * other elements (leading/trailing accessories). It usually best to set lineHeight with undefined
+  */
+ import React from 'react';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { TextFieldProps, ValidationMessagePosition, FieldContextType, TextFieldMethods } from './types';
+ interface StaticMembers {
+     validationMessagePositions: typeof ValidationMessagePosition;
+diff --git a/node_modules/react-native-ui-lib/src/incubator/TouchableOpacity.d.ts b/node_modules/react-native-ui-lib/src/incubator/TouchableOpacity.d.ts
+index f13a927..3c58455 100644
+--- a/node_modules/react-native-ui-lib/src/incubator/TouchableOpacity.d.ts
++++ b/node_modules/react-native-ui-lib/src/incubator/TouchableOpacity.d.ts
+@@ -1,6 +1,7 @@
+ import React from 'react';
+ import { LayoutChangeEvent } from 'react-native';
+ import { State } from 'react-native-gesture-handler';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ViewProps } from '../components/view';
+ export declare type TouchableOpacityProps = {
+     /**
+diff --git a/node_modules/react-native-ui-lib/src/incubator/WheelPicker/Item.d.ts b/node_modules/react-native-ui-lib/src/incubator/WheelPicker/Item.d.ts
+index 66ecf56..a83b983 100644
+--- a/node_modules/react-native-ui-lib/src/incubator/WheelPicker/Item.d.ts
++++ b/node_modules/react-native-ui-lib/src/incubator/WheelPicker/Item.d.ts
+@@ -1,6 +1,7 @@
+ import React from 'react';
+ import { TextStyle } from 'react-native';
+ import Animated from 'react-native-reanimated';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { TextProps } from '../../components/text';
+ import { WheelPickerAlign } from './types';
+ export interface ItemProps {
+diff --git a/node_modules/react-native-ui-lib/src/incubator/WheelPicker/index.d.ts b/node_modules/react-native-ui-lib/src/incubator/WheelPicker/index.d.ts
+index 5b097e0..11bdf8d 100644
+--- a/node_modules/react-native-ui-lib/src/incubator/WheelPicker/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/incubator/WheelPicker/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { TextStyle, ViewStyle, FlatListProps } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { FaderProps } from '../../components/fader';
+ import { ItemProps } from './Item';
+ import { TextProps } from '../../components/text';
+diff --git a/node_modules/react-native-ui-lib/src/incubator/panView/index.d.ts b/node_modules/react-native-ui-lib/src/incubator/panView/index.d.ts
+index 827a06e..e444bd0 100644
+--- a/node_modules/react-native-ui-lib/src/incubator/panView/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/incubator/panView/index.d.ts
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { StyleProp, ViewStyle } from 'react-native';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ViewProps } from '../../components/view';
+ import { PanningDirections, PanningDirectionsEnum } from './panningUtil';
+ import { PanGestureProps, PanViewDirections, PanViewDirectionsEnum, PanViewDismissThreshold, DEFAULT_DIRECTIONS, DEFAULT_ANIMATION_CONFIG } from './usePanGesture';
+diff --git a/node_modules/react-native-ui-lib/src/incubator/toast/index.d.ts b/node_modules/react-native-ui-lib/src/incubator/toast/index.d.ts
+index 17f19ec..8acdead 100644
+--- a/node_modules/react-native-ui-lib/src/incubator/toast/index.d.ts
++++ b/node_modules/react-native-ui-lib/src/incubator/toast/index.d.ts
+@@ -1,4 +1,5 @@
+ import React from 'react';
++import { ThemeComponent } from '../../../typings/globalTypes';
+ import { ToastProps, ToastPresets } from './types';
+ export { ToastProps, ToastPresets };
+ declare const _default: React.ComponentClass<ToastProps & ThemeComponent, any> & {
+diff --git a/node_modules/react-native-ui-lib/typings/globalTypes.d.ts b/node_modules/react-native-ui-lib/typings/globalTypes.d.ts
+index 3a92392..d882e8a 100644
+--- a/node_modules/react-native-ui-lib/typings/globalTypes.d.ts
++++ b/node_modules/react-native-ui-lib/typings/globalTypes.d.ts
+@@ -9,6 +9,6 @@ interface Extendable {
+   [key: string]: any;
+ }
+ 
+-interface ThemeComponent {
++export interface ThemeComponent {
+   useCustomTheme?: boolean;
+ }
