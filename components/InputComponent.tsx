@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Incubator, Text, TextField} from 'react-native-ui-lib';
+import {Text, TextInput} from 'react-native-paper';
 import {Colors} from '../style/Colors';
 import {Fonts} from '../style/Fonts';
 
@@ -27,15 +27,13 @@ export const Input = (props: Props) => {
         style={{fontFamily: Fonts.TextNormal, color: Colors.textPrimary}}>
         {props.label}
       </Text>
-      <Incubator.TextField
+      <TextInput
         keyboardType={props.keyboardType}
         value={inputText}
         placeholder={isFocused ? '' : props.placeholder}
         mode="outlined"
         autoCorrect={false}
-        onChangeText={(inputText: React.SetStateAction<string>) =>
-          setInputText(inputText)
-        }
+        onChangeText={inputText => setInputText(inputText)}
         placeholderTextColor={Colors.textGrey}
         textColor={Colors.textPrimary}
         style={{backgroundColor: Colors.backgroundDarkest}}
@@ -46,29 +44,29 @@ export const Input = (props: Props) => {
           setIsFocused(true);
         }}
         onBlur={() => setIsFocused(false)}
-        // left={
-        //   <TextInput.Icon
-        //     icon={props.iconName}
-        //     iconColor={isFocused ? Colors.textPrimary : Colors.textGrey}
-        //     onFocus={() => {
-        //       props.onFocus;
-        //       setIsFocused(true);
-        //     }}
-        //     onBlur={() => setIsFocused(false)}
-        //   />
-        // }
-        // right={
-        //   props.password && (
-        //     <TextInput.Icon
-        //       forceTextInputFocus={false}
-        //       iconColor={Colors.textGrey}
-        //       icon={showPassword ? 'eye' : 'eye-off'}
-        //       onPress={() => {
-        //         setShowPassword(!showPassword);
-        //       }}
-        //     />
-        //   )
-        // }
+        left={
+          <TextInput.Icon
+            icon={props.iconName}
+            iconColor={isFocused ? Colors.textPrimary : Colors.textGrey}
+            onFocus={() => {
+              props.onFocus;
+              setIsFocused(true);
+            }}
+            onBlur={() => setIsFocused(false)}
+          />
+        }
+        right={
+          props.password && (
+            <TextInput.Icon
+              forceTextInputFocus={false}
+              iconColor={Colors.textGrey}
+              icon={showPassword ? 'eye' : 'eye-off'}
+              onPress={() => {
+                setShowPassword(!showPassword);
+              }}
+            />
+          )
+        }
       />
     </View>
   );

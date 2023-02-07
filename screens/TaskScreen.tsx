@@ -1,7 +1,7 @@
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import React, {useRef, useState} from 'react';
 import {ScrollView, SafeAreaView, View} from 'react-native';
-import {Text} from 'react-native-ui-lib';
+import {Button, FAB, Text} from 'react-native-paper';
 import MyBottomSheet from '../components/BottomSheetComponent';
 import TaskComponent from '../components/TaskComponent';
 
@@ -55,7 +55,7 @@ export default function TaskScreen() {
         <TaskComponent />
       </ScrollView>
 
-      {/* <FAB
+      <FAB
         icon="plus"
         style={{
           position: 'absolute',
@@ -66,7 +66,7 @@ export default function TaskScreen() {
         label="New Task"
         color={Colors.textPrimary}
         onPress={() => handlePresentModal()}
-      /> */}
+      />
       <MyBottomSheet bottomSheetModalRef={bottomSheetModalRef} />
     </SafeAreaView>
   );

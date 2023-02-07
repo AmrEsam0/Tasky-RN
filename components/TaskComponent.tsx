@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
-import {Checkbox, Incubator} from 'react-native-ui-lib';
+import {Checkbox, TextInput} from 'react-native-paper';
 import {Colors} from '../style/Colors';
 
 const TaskComponent = () => {
@@ -20,13 +20,13 @@ const TaskComponent = () => {
         color={Colors.textAccent}
         onPress={() => setTaskCheck(!taskCheck)}
       />
-      <Incubator.TextField
+      <TextInput
         style={{backgroundColor: Colors.backgroundDarkest, flex: 1}}
         textColor={Colors.textPrimary}
         outlineColor=""
         value={value}
         dense={true}
-        onChangeText={(value: React.SetStateAction<string>) => setValue(value)}
+        onChangeText={value => setValue(value)}
         outlineStyle={{borderRadius: 0, borderWidth: 0}}
         activeOutlineColor={Colors.backgroundDarkest}
         activeUnderlineColor={Colors.backgroundDarkest}

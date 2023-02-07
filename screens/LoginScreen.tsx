@@ -1,13 +1,13 @@
 import React, {useEffect, useRef} from 'react';
 import {SafeAreaView, ScrollView, View, Animated} from 'react-native';
+import {Button, Text} from 'react-native-paper';
 import {Input} from '../components/InputComponent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../style/Colors';
 import {Fonts} from '../style/Fonts';
-import {Button, Text} from 'react-native-ui-lib';
 
 //TODO: extract components here and in RegisterScreen
-export function LoginScreen({navigation}: {navigation: any}) {
+export function LoginScreen({navigation}) {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
@@ -33,6 +33,7 @@ export function LoginScreen({navigation}: {navigation: any}) {
         }}>
         <Animated.View style={{opacity: fadeAnim}}>
           <Text
+            variant="displayLarge"
             style={{
               color: Colors.textPrimary,
               marginBottom: '12%',
@@ -42,6 +43,7 @@ export function LoginScreen({navigation}: {navigation: any}) {
           </Text>
         </Animated.View>
         <Text
+          variant="displaySmall"
           style={{
             color: Colors.textPrimary,
             marginBottom: '8%',
@@ -64,12 +66,6 @@ export function LoginScreen({navigation}: {navigation: any}) {
           />
         </View>
         <Button
-          backgroundColor={Colors.backgroundAccent}
-          labelStyle={{color: Colors.textPrimary}}
-          label="Login"
-        />
-
-        {/* <Button
           icon={() => (
             <Icon name="login-variant" size={24} color={Colors.textDark} />
           )}
@@ -93,7 +89,7 @@ export function LoginScreen({navigation}: {navigation: any}) {
           }}
           onPress={() => navigation.navigate('TaskScreen')}>
           Login
-        </Button> */}
+        </Button>
         <View
           style={{
             flex: 1,
@@ -102,6 +98,7 @@ export function LoginScreen({navigation}: {navigation: any}) {
             alignItems: 'center',
           }}>
           <Text
+            variant="titleMedium"
             style={{
               fontFamily: Fonts.TextNormal,
               color: Colors.textPrimary,
@@ -109,8 +106,9 @@ export function LoginScreen({navigation}: {navigation: any}) {
             }}>
             Forgot your password?
           </Text>
-          <Button style={{marginTop: '1%'}}>
+          <Button mode="text" style={{marginTop: '1%'}}>
             <Text
+              variant="titleMedium"
               style={{
                 color: Colors.textAccent,
                 fontFamily: Fonts.TextBold,
@@ -127,6 +125,7 @@ export function LoginScreen({navigation}: {navigation: any}) {
             alignItems: 'center',
           }}>
           <Text
+            variant="titleMedium"
             style={{
               color: Colors.textPrimary,
               textAlign: 'center',
@@ -135,9 +134,11 @@ export function LoginScreen({navigation}: {navigation: any}) {
             Don't have an account?
           </Text>
           <Button
+            mode="text"
             style={{marginTop: '1%'}}
             onPress={() => navigation.navigate('RegisterScreen')}>
             <Text
+              variant="titleMedium"
               style={{
                 color: Colors.textAccent,
                 fontFamily: Fonts.TextBold,
