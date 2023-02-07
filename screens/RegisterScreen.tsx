@@ -7,7 +7,7 @@ import {Colors} from '../style/Colors';
 import {Fonts} from '../style/Fonts';
 
 //TODO: figure out how to do animation on this page since it's the bottom of the stack
-export function RegisterScreen({navigation}) {
+export function RegisterScreen({navigation}: {navigation: any}) {
   // const fadeAnim = useRef(new Animated.Value(0)).current;
   // const fadeIn = () => {
   //   Animated.timing(fadeAnim, {

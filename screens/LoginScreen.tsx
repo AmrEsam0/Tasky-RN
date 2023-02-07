@@ -7,7 +7,7 @@ import {Colors} from '../style/Colors';
 import {Fonts} from '../style/Fonts';
 
 //TODO: extract components here and in RegisterScreen
-export function LoginScreen({navigation}) {
+export function LoginScreen({navigation}: {navigation: any}) {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
