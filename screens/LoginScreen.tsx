@@ -67,13 +67,15 @@ export function LoginScreen({navigation}: {navigation: any}) {
         </View>
         <Button
           icon={() => (
-            <Icon name="login-variant" size={24} color={Colors.textDark} />
+            <Icon name="login-variant" size={22} color={Colors.textPrimary} />
           )}
           mode="contained"
           style={{
-            backgroundColor: Colors.backgroundLight,
+            backgroundColor: Colors.backgroundDark,
+            borderColor: Colors.backgroundLight,
+            borderWidth: 1,
             marginTop: '2%',
-            width: '54%',
+            width: '46%',
             alignSelf: 'center',
             borderRadius: 4,
             height: 50,
@@ -83,9 +85,9 @@ export function LoginScreen({navigation}: {navigation: any}) {
           labelStyle={{
             fontSize: 20,
             alignSelf: 'center',
-            marginTop: '8%',
-            fontFamily: Fonts.TextMedium,
-            color: Colors.textDark,
+            marginTop: '9%',
+            fontFamily: Fonts.TextNormal,
+            color: Colors.textPrimary,
           }}
           onPress={() => navigation.navigate('TaskScreen')}>
           Login
@@ -100,7 +102,7 @@ export function LoginScreen({navigation}: {navigation: any}) {
           <Text
             variant="titleMedium"
             style={{
-              fontFamily: Fonts.TextNormal,
+              fontFamily: Fonts.TextLight,
               color: Colors.textPrimary,
               textAlign: 'center',
             }}>
@@ -111,7 +113,7 @@ export function LoginScreen({navigation}: {navigation: any}) {
               variant="titleMedium"
               style={{
                 color: Colors.textAccent,
-                fontFamily: Fonts.TextBold,
+                fontFamily: Fonts.TextNormal,
               }}>
               Reset Password
             </Text>
@@ -129,7 +131,7 @@ export function LoginScreen({navigation}: {navigation: any}) {
             style={{
               color: Colors.textPrimary,
               textAlign: 'center',
-              fontFamily: Fonts.TextNormal,
+              fontFamily: Fonts.TextLight,
             }}>
             Don't have an account?
           </Text>
@@ -141,7 +143,7 @@ export function LoginScreen({navigation}: {navigation: any}) {
               variant="titleMedium"
               style={{
                 color: Colors.textAccent,
-                fontFamily: Fonts.TextBold,
+                fontFamily: Fonts.TextNormal,
               }}>
               Sign Up
             </Text>

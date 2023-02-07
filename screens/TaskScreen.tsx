@@ -1,7 +1,7 @@
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import React, {useRef, useState} from 'react';
 import {ScrollView, SafeAreaView, View} from 'react-native';
-import {Button, FAB, Text} from 'react-native-paper';
+import {FAB, Text} from 'react-native-paper';
 import MyBottomSheet from '../components/BottomSheetComponent';
 import TaskComponent from '../components/TaskComponent';
 
@@ -30,7 +30,7 @@ export default function TaskScreen() {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          marginBottom: '10%',
+          marginBottom: '4%',
         }}>
         <Text
           variant="headlineLarge"
@@ -49,10 +49,20 @@ export default function TaskScreen() {
           }}
         />
       </View>
-      <ScrollView>
-        <TaskComponent />
-        <TaskComponent />
-        <TaskComponent />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View
+          style={{
+            borderColor: Colors.backgroundLight,
+            borderWidth: 1,
+            borderRadius: 10,
+            marginBottom: '30%',
+            backgroundColor: Colors.backgroundDark,
+            paddingVertical: '4%',
+          }}>
+          <TaskComponent />
+          <TaskComponent />
+          <TaskComponent />
+        </View>
       </ScrollView>
 
       <FAB

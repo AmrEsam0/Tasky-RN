@@ -1,5 +1,5 @@
-import React from 'react';
-import {SafeAreaView, ScrollView, View} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {Animated, SafeAreaView, ScrollView, View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 import {Input} from '../components/InputComponent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,16 +8,16 @@ import {Fonts} from '../style/Fonts';
 
 //TODO: figure out how to do animation on this page since it's the bottom of the stack
 export function RegisterScreen({navigation}: {navigation: any}) {
-  // const fadeAnim = useRef(new Animated.Value(0)).current;
-  // const fadeIn = () => {
-  //   Animated.timing(fadeAnim, {
-  //     toValue: 1,
-  //     duration: 1300,
-  //     useNativeDriver: true,
-  //   }).start();
-  // };
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1300,
+      useNativeDriver: true,
+    }).start();
+  };
 
-  // useEffect(() => fadeIn());
+  useEffect(() => fadeIn());
   return (
     <SafeAreaView
       style={{
@@ -30,17 +30,17 @@ export function RegisterScreen({navigation}: {navigation: any}) {
           paddingTop: '10%',
           paddingHorizontal: '4%',
         }}>
-        {/* <Animated.View style={{opacity: fadeAnim}}> */}
-        <Text
-          variant="displayLarge"
-          style={{
-            color: Colors.textPrimary,
-            marginBottom: '6%',
-            fontFamily: Fonts.TextBold,
-          }}>
-          Welcome
-        </Text>
-        {/* </Animated.View> */}
+        <Animated.View style={{opacity: fadeAnim}}>
+          <Text
+            variant="displayLarge"
+            style={{
+              color: Colors.textPrimary,
+              marginBottom: '6%',
+              fontFamily: Fonts.TextBold,
+            }}>
+            Welcome
+          </Text>
+        </Animated.View>
         <Text
           variant="displaySmall"
           style={{
@@ -83,12 +83,14 @@ export function RegisterScreen({navigation}: {navigation: any}) {
             <Icon
               name="account-check-outline"
               size={24}
-              color={Colors.textDark}
+              color={Colors.textPrimary}
             />
           )}
           mode="contained"
           style={{
-            backgroundColor: Colors.backgroundLight,
+            backgroundColor: Colors.backgroundDark,
+            borderColor: Colors.backgroundLight,
+            borderWidth: 1,
             marginTop: '2%',
             width: '54%',
             alignSelf: 'center',
@@ -98,11 +100,11 @@ export function RegisterScreen({navigation}: {navigation: any}) {
             marginBottom: '4%',
           }}
           labelStyle={{
-            color: Colors.textDark,
+            color: Colors.textPrimary,
             fontSize: 20,
             alignSelf: 'center',
             marginTop: '8%',
-            fontFamily: Fonts.TextMedium,
+            fontFamily: Fonts.TextNormal,
           }}>
           Register
         </Button>
@@ -116,7 +118,7 @@ export function RegisterScreen({navigation}: {navigation: any}) {
           <Text
             variant="titleMedium"
             style={{
-              fontFamily: Fonts.TextNormal,
+              fontFamily: Fonts.TextLight,
               color: Colors.textPrimary,
               textAlign: 'center',
             }}>
@@ -130,7 +132,7 @@ export function RegisterScreen({navigation}: {navigation: any}) {
               variant="titleMedium"
               style={{
                 color: Colors.textAccent,
-                fontFamily: Fonts.TextBold,
+                fontFamily: Fonts.TextNormal,
               }}>
               Sign in
             </Text>
