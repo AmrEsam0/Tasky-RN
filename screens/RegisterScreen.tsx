@@ -5,6 +5,7 @@ import {Input} from '../components/InputComponent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../style/Colors';
 import {Fonts} from '../style/Fonts';
+import {CustomButton} from '../components/CustomButton';
 
 //TODO: figure out how to do animation on this page since it's the bottom of the stack
 export function RegisterScreen({navigation}: {navigation: any}) {
@@ -15,6 +16,10 @@ export function RegisterScreen({navigation}: {navigation: any}) {
       duration: 1300,
       useNativeDriver: true,
     }).start();
+  };
+
+  const navigateTo = () => {
+    navigation.navigate('TaskScreen');
   };
 
   useEffect(() => fadeIn());
@@ -94,35 +99,11 @@ export function RegisterScreen({navigation}: {navigation: any}) {
             placeholder="Enter your password again"
             password={true}
           />
-          <Button
-            icon={() => (
-              <Icon
-                name="account-check-outline"
-                size={24}
-                color={Colors.textPrimary}
-              />
-            )}
-            mode="contained"
-            style={{
-              backgroundColor: Colors.backgroundDark,
-              borderColor: Colors.backgroundLight,
-              borderWidth: 1,
-              marginTop: '2%',
-              width: '54%',
-              alignSelf: 'center',
-              borderRadius: 4,
-              justifyContent: 'center',
-              marginBottom: '4%',
-            }}
-            labelStyle={{
-              color: Colors.textPrimary,
-              fontSize: 20,
-              alignSelf: 'center',
-              marginTop: '8%',
-              fontFamily: Fonts.TextNormal,
-            }}>
-            Register
-          </Button>
+          <CustomButton
+            label="Register"
+            navigateTo={navigateTo}
+            iconName="account-check-outline"
+          />
           <View
             style={{
               flex: 1,

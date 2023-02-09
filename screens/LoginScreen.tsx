@@ -5,6 +5,7 @@ import {Input} from '../components/InputComponent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../style/Colors';
 import {Fonts} from '../style/Fonts';
+import {CustomButton} from '../components/CustomButton';
 
 //TODO: extract components here and in RegisterScreen
 export function LoginScreen({navigation}: {navigation: any}) {
@@ -15,6 +16,10 @@ export function LoginScreen({navigation}: {navigation: any}) {
       duration: 1300,
       useNativeDriver: true,
     }).start();
+  };
+
+  const navigateTo = () => {
+    navigation.navigate('TaskScreen');
   };
 
   useEffect(() => fadeIn());
@@ -65,32 +70,11 @@ export function LoginScreen({navigation}: {navigation: any}) {
             password={true}
           />
         </View>
-        <Button
-          icon={() => (
-            <Icon name="login-variant" size={22} color={Colors.textPrimary} />
-          )}
-          mode="contained"
-          style={{
-            backgroundColor: Colors.backgroundDark,
-            borderColor: Colors.backgroundLight,
-            borderWidth: 1,
-            marginTop: '4%',
-            width: '46%',
-            alignSelf: 'center',
-            borderRadius: 4,
-            justifyContent: 'center',
-            marginBottom: '2%',
-          }}
-          labelStyle={{
-            fontSize: 20,
-            alignSelf: 'center',
-            marginTop: '9%',
-            fontFamily: Fonts.TextNormal,
-            color: Colors.textPrimary,
-          }}
-          onPress={() => navigation.navigate('TaskScreen')}>
-          Login
-        </Button>
+        <CustomButton
+          label="Login"
+          navigateTo={navigateTo}
+          iconName="login-variant"
+        />
         <View
           style={{
             flex: 1,
