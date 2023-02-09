@@ -52,8 +52,6 @@ export default function TaskScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
-            borderColor: Colors.backgroundLight,
-            borderWidth: 1,
             borderRadius: 10,
             marginBottom: '30%',
             backgroundColor: Colors.backgroundDark,
@@ -74,7 +72,7 @@ export default function TaskScreen() {
           backgroundColor: Colors.backgroundAccent,
         }}
         label="New Task"
-        color={Colors.textPrimary}
+        color={Colors.textDark}
         onPress={() => handlePresentModal()}
       />
       <MyBottomSheet bottomSheetModalRef={bottomSheetModalRef} />

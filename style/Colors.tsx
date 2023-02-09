@@ -4,8 +4,9 @@ export const Colors = {
   textDark: '#111111',
   backgroundLighter: '#F9F9F9',
   backgroundLight: '#F9F9F98F',
-  backgroundDark: '#212121',
+  backgroundDark: '#1A191E',
   backgroundDarkest: '#141418',
-  textAccent: '#355FF0',
-  backgroundAccent: '#355FF0',
+  textAccent: '#FFBB01',
+  backgroundAccent: '#FFBB01',
+  backgroundAccentDark: '#BB8900',
 };

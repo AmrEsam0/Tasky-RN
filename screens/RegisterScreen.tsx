@@ -25,118 +25,134 @@ export function RegisterScreen({navigation}: {navigation: any}) {
         height: '100%',
         backgroundColor: Colors.backgroundDarkest,
       }}>
-      <ScrollView
-        contentContainerStyle={{
-          paddingTop: '10%',
-          paddingHorizontal: '4%',
-        }}>
-        <Animated.View style={{opacity: fadeAnim}}>
+      <ScrollView>
+        <View
+          style={{
+            paddingTop: '20%',
+            borderBottomWidth: 1,
+            borderBottomLeftRadius: 10,
+            borderBottomRightRadius: 10,
+            backgroundColor: Colors.backgroundAccentDark,
+            marginBottom: '4%',
+          }}>
           <Text
             variant="displayLarge"
             style={{
-              color: Colors.textPrimary,
-              marginBottom: '6%',
+              color: Colors.textDark,
+              marginBottom: '4%',
+              marginLeft: '2%',
               fontFamily: Fonts.TextBold,
             }}>
             Welcome
           </Text>
-        </Animated.View>
-        <Text
-          variant="displaySmall"
-          style={{
-            color: Colors.textPrimary,
-            marginBottom: '4%',
-            fontFamily: 'Roboto-Medium',
-          }}>
-          Register
-        </Text>
-        <Input
-          label="First Name"
-          iconName="account-outline"
-          placeholder="Enter your first name"
-        />
-        <Input
-          label="Last Name"
-          iconName="account-outline"
-          placeholder="Enter your last name"
-        />
-        <Input
-          label="Email"
-          iconName="email-outline"
-          placeholder="Enter your email"
-          keyboardType="email-address"
-        />
-        <Input
-          label="Password"
-          iconName="lock-outline"
-          placeholder="Enter your password"
-          password={true}
-        />
-        <Input
-          label="Confirm Password"
-          iconName="lock-outline"
-          placeholder="Enter your password again"
-          password={true}
-        />
-        <Button
-          icon={() => (
-            <Icon
-              name="account-check-outline"
-              size={24}
-              color={Colors.textPrimary}
-            />
-          )}
-          mode="contained"
-          style={{
-            backgroundColor: Colors.backgroundDark,
-            borderColor: Colors.backgroundLight,
-            borderWidth: 1,
-            marginTop: '2%',
-            width: '54%',
-            alignSelf: 'center',
-            borderRadius: 4,
-            height: 50,
-            justifyContent: 'center',
-            marginBottom: '4%',
-          }}
-          labelStyle={{
-            color: Colors.textPrimary,
-            fontSize: 20,
-            alignSelf: 'center',
-            marginTop: '8%',
-            fontFamily: Fonts.TextNormal,
-          }}>
-          Register
-        </Button>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+        </View>
+        <View style={{paddingHorizontal: '4%'}}>
           <Text
-            variant="titleMedium"
+            variant="displaySmall"
             style={{
-              fontFamily: Fonts.TextLight,
               color: Colors.textPrimary,
-              textAlign: 'center',
+              marginBottom: '4%',
+              fontFamily: 'Roboto-Medium',
             }}>
-            Already have an account?
+            Register
           </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '100%',
+              alignSelf: 'center',
+            }}>
+            <Input
+              label="First Name"
+              iconName="account-outline"
+              placeholder="First name"
+              width="46%"
+            />
+            <Input
+              label="Last Name"
+              iconName="account-outline"
+              placeholder="Last name"
+              width="46%"
+              marginLeft="2%"
+            />
+          </View>
+          <Input
+            label="Email"
+            iconName="email-outline"
+            placeholder="Enter your email"
+            keyboardType="email-address"
+          />
+          <Input
+            label="Password"
+            iconName="lock-outline"
+            placeholder="Enter your password"
+            password={true}
+          />
+          <Input
+            label="Confirm Password"
+            iconName="lock-outline"
+            placeholder="Enter your password again"
+            password={true}
+          />
           <Button
-            mode="text"
-            style={{marginTop: '1%'}}
-            onPress={() => navigation.navigate('LoginScreen')}>
+            icon={() => (
+              <Icon
+                name="account-check-outline"
+                size={24}
+                color={Colors.textPrimary}
+              />
+            )}
+            mode="contained"
+            style={{
+              backgroundColor: Colors.backgroundDark,
+              borderColor: Colors.backgroundLight,
+              borderWidth: 1,
+              marginTop: '2%',
+              width: '54%',
+              alignSelf: 'center',
+              borderRadius: 4,
+              justifyContent: 'center',
+              marginBottom: '4%',
+            }}
+            labelStyle={{
+              color: Colors.textPrimary,
+              fontSize: 20,
+              alignSelf: 'center',
+              marginTop: '8%',
+              fontFamily: Fonts.TextNormal,
+            }}>
+            Register
+          </Button>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
             <Text
               variant="titleMedium"
               style={{
-                color: Colors.textAccent,
-                fontFamily: Fonts.TextNormal,
+                fontFamily: Fonts.TextLight,
+                color: Colors.textPrimary,
+                textAlign: 'center',
               }}>
-              Sign in
+              Already have an account?
             </Text>
-          </Button>
+            <Button
+              mode="text"
+              style={{marginTop: '1%'}}
+              onPress={() => navigation.replace('LoginScreen')}>
+              <Text
+                variant="titleMedium"
+                style={{
+                  color: Colors.textAccent,
+                  fontFamily: Fonts.TextNormal,
+                }}>
+                Sign in
+              </Text>
+            </Button>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

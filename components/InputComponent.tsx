@@ -12,6 +12,8 @@ type Props = {
   onFocus?: () => void;
   keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
   placeholder?: string;
+  width?: string;
+  marginLeft?: string;
 };
 
 // TODO: move styles down to the bottom of the file
@@ -21,7 +23,14 @@ export const Input = (props: Props) => {
   const [inputText, setInputText] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   return (
-    <View style={{marginBottom: '4%', width: '96%', alignSelf: 'center'}}>
+    <View
+      style={{
+        marginBottom: '3%',
+        width: props.width || '100%',
+        alignSelf: 'center',
+        flex: 1,
+        marginLeft: props.marginLeft,
+      }}>
       <Text
         variant="labelLarge"
         style={{fontFamily: Fonts.TextNormal, color: Colors.textPrimary}}>
@@ -36,7 +45,7 @@ export const Input = (props: Props) => {
         onChangeText={inputText => setInputText(inputText)}
         placeholderTextColor={Colors.textGrey}
         textColor={Colors.textPrimary}
-        style={{backgroundColor: Colors.backgroundDarkest}}
+        style={{backgroundColor: Colors.backgroundDark}}
         activeOutlineColor={Colors.textAccent}
         secureTextEntry={showPassword ? false : props.password}
         onFocus={() => {
@@ -46,6 +55,7 @@ export const Input = (props: Props) => {
         onBlur={() => setIsFocused(false)}
         left={
           <TextInput.Icon
+            style={{marginLeft: '-4%'}}
             icon={props.iconName}
             iconColor={isFocused ? Colors.textPrimary : Colors.textGrey}
             onFocus={() => {

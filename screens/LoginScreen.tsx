@@ -28,7 +28,7 @@ export function LoginScreen({navigation}: {navigation: any}) {
       }}>
       <ScrollView
         contentContainerStyle={{
-          paddingTop: '10%',
+          paddingTop: '20%',
           paddingHorizontal: '4%',
         }}>
         <Animated.View style={{opacity: fadeAnim}}>
@@ -36,7 +36,7 @@ export function LoginScreen({navigation}: {navigation: any}) {
             variant="displayLarge"
             style={{
               color: Colors.textPrimary,
-              marginBottom: '12%',
+              marginBottom: '6%',
               fontFamily: Fonts.TextBold,
             }}>
             Welcome Back!
@@ -74,13 +74,12 @@ export function LoginScreen({navigation}: {navigation: any}) {
             backgroundColor: Colors.backgroundDark,
             borderColor: Colors.backgroundLight,
             borderWidth: 1,
-            marginTop: '2%',
+            marginTop: '4%',
             width: '46%',
             alignSelf: 'center',
             borderRadius: 4,
-            height: 50,
             justifyContent: 'center',
-            marginBottom: '10%',
+            marginBottom: '2%',
           }}
           labelStyle={{
             fontSize: 20,
@@ -138,7 +137,7 @@ export function LoginScreen({navigation}: {navigation: any}) {
           <Button
             mode="text"
             style={{marginTop: '1%'}}
-            onPress={() => navigation.navigate('RegisterScreen')}>
+            onPress={() => navigation.replace('RegisterScreen')}>
             <Text
               variant="titleMedium"
               style={{
