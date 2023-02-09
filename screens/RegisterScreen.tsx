@@ -2,7 +2,6 @@ import React, {useEffect, useRef} from 'react';
 import {Animated, SafeAreaView, ScrollView, View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 import {Input} from '../components/InputComponent';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../style/Colors';
 import {Fonts} from '../style/Fonts';
 import {CustomButton} from '../components/CustomButton';
