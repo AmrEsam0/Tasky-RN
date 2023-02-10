@@ -1,9 +1,6 @@
-import {BottomSheetModal} from '@gorhom/bottom-sheet';
-import React, {useRef, useState} from 'react';
-import {ScrollView, SafeAreaView, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {ScrollView, SafeAreaView, View, Keyboard} from 'react-native';
 import {FAB, Text, TextInput} from 'react-native-paper';
-import MyBottomSheet from '../components/BottomSheetComponent';
-import {Input} from '../components/InputComponent';
 import TaskComponent from '../components/TaskComponent';
 
 import {Colors} from '../style/Colors';
@@ -11,13 +8,24 @@ import {Fonts} from '../style/Fonts';
 
 //TODO: LANDING PAGE, YO!
 export default function TaskScreen() {
-  const [clicked, setClicked] = useState(false);
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const list = [] as string[];
+  const [todoList, setTodoList] = useState(list);
   const [value, setValue] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
 
-  const handlePresentModal = () => {
-    bottomSheetModalRef.current?.present();
+  useEffect(() => {
+    setTodoList(list);
+  }, []);
+
+  const addTask = (value: string) => {
+    setTodoList([...todoList, value]);
+    setValue('');
+    setIsFocused(false);
   };
+  if (isFocused === false) {
+    Keyboard.dismiss();
+  }
+
   return (
     <SafeAreaView
       style={{
@@ -41,7 +49,7 @@ export default function TaskScreen() {
             paddingRight: '6%',
             fontFamily: Fonts.TextMedium,
           }}>
-          Tasks
+          Tasky
         </Text>
         <View
           style={{
@@ -57,9 +65,15 @@ export default function TaskScreen() {
             marginBottom: '30%',
             paddingVertical: '4%',
           }}>
-          <TaskComponent />
-          <TaskComponent />
-          <TaskComponent />
+          {todoList.map((item, index) => {
+            if (item !== '') {
+              return <TaskComponent key={index} taskName={item} />;
+            } else if (todoList.length === 1) {
+              return (
+                <Text style={{color: Colors.textGrey}}>No tasks yet!</Text>
+              );
+            }
+          })}
         </View>
       </ScrollView>
       <View
@@ -81,6 +95,8 @@ export default function TaskScreen() {
             borderTopStartRadius: 4,
             borderBottomEndRadius: 4,
             borderBottomStartRadius: 4,
+            borderColor: Colors.backgroundAccent,
+            borderWidth: 1,
           }}
           textColor={Colors.textPrimary}
           outlineColor=""
@@ -91,15 +107,19 @@ export default function TaskScreen() {
           underlineStyle={{height: 0}}
           cursorColor={Colors.textAccent}
           selectionColor={Colors.textGrey}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
         />
         <FAB
-          icon="plus"
+          icon={isFocused ? 'check' : 'plus'}
           style={{
             backgroundColor: Colors.backgroundAccentDark,
             marginLeft: '2%',
           }}
           color={Colors.textDark}
-          onPress={() => handlePresentModal()}
+          onPress={() => {
+            addTask(value);
+          }}
         />
       </View>
     </SafeAreaView>

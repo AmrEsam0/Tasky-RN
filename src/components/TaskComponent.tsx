@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
-import {Checkbox, TextInput} from 'react-native-paper';
+import {Checkbox, Text, TextInput} from 'react-native-paper';
 import {Colors} from '../style/Colors';
 
-const TaskComponent = () => {
+const TaskComponent = ({taskName}: {taskName: string}) => {
   const [taskCheck, setTaskCheck] = useState(false);
   const [value, setValue] = useState('');
   return (
@@ -22,24 +22,17 @@ const TaskComponent = () => {
         color={Colors.textAccent}
         onPress={() => setTaskCheck(!taskCheck)}
       />
-      <TextInput
+      <Text
         style={{
           backgroundColor: Colors.backgroundDark,
           flex: 1,
-          textDecorationLine: 'line-through',
-        }}
-        textColor={Colors.textPrimary}
-        outlineColor=""
-        value={value}
-        dense={true}
-        onChangeText={value => setValue(value)}
-        outlineStyle={{borderRadius: 0, borderWidth: 0}}
-        activeOutlineColor={Colors.backgroundDark}
-        activeUnderlineColor={Colors.backgroundDark}
-        underlineStyle={{height: 0}}
-        cursorColor={Colors.textAccent}
-        selectionColor={Colors.textGrey}
-      />
+          textDecorationLine: taskCheck ? 'line-through' : 'none',
+          color: taskCheck ? Colors.textGrey : Colors.textPrimary,
+          marginStart: '2%',
+          fontSize: 18,
+        }}>
+        {taskName}
+      </Text>
     </View>
   );
 };
