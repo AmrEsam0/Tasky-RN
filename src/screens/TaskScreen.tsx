@@ -45,16 +45,14 @@ export default function TaskScreen() {
           style={{
             height: 1,
             flex: 1,
-            backgroundColor: Colors.backgroundLight,
+            backgroundColor: Colors.backgroundAccent,
           }}
         />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
-            borderRadius: 10,
             marginBottom: '30%',
-            backgroundColor: Colors.backgroundDark,
             paddingVertical: '4%',
           }}>
           <TaskComponent />
@@ -69,7 +67,7 @@ export default function TaskScreen() {
           position: 'absolute',
           bottom: '4%',
           alignSelf: 'center',
-          backgroundColor: Colors.backgroundAccent,
+          backgroundColor: Colors.backgroundAccentDark,
         }}
         label="New Task"
         color={Colors.textDark}

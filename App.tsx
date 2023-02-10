@@ -1,10 +1,10 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {Colors} from './style/Colors';
-import {LoginScreen} from './screens/LoginScreen';
-import {RegisterScreen} from './screens/RegisterScreen';
-import TaskScreen from './screens/TaskScreen';
+import {Colors} from './src/style/Colors';
+import {LoginScreen} from './src/screens/LoginScreen';
+import {RegisterScreen} from './src/screens/RegisterScreen';
+import TaskScreen from './src/screens/TaskScreen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export default function App() {

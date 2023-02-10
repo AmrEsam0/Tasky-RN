@@ -6,13 +6,19 @@ import {Colors} from '../style/Colors';
 const TaskComponent = () => {
   const [taskCheck, setTaskCheck] = useState(false);
   const [value, setValue] = useState('');
+  const [borderColor, setBorderColor] = useState(Colors.backgroundLight);
   return (
     <View
       style={{
+        backgroundColor: Colors.backgroundDark,
         flexDirection: 'row',
-        marginHorizontal: '4%',
-        marginBottom: '4%',
+        marginHorizontal: '1%',
+        marginBottom: '6%',
         alignItems: 'center',
+        // borderColor: borderColor,
+        // borderWidth: 1,
+        borderRadius: 10,
+        padding: '1%',
       }}>
       <Checkbox
         status={taskCheck ? 'checked' : 'unchecked'}
@@ -20,7 +26,11 @@ const TaskComponent = () => {
         onPress={() => setTaskCheck(!taskCheck)}
       />
       <TextInput
-        style={{backgroundColor: Colors.backgroundDark, flex: 1}}
+        style={{
+          backgroundColor: Colors.backgroundDark,
+          flex: 1,
+          textDecorationLine: taskCheck ? 'line-through' : 'none',
+        }}
         textColor={Colors.textPrimary}
         outlineColor=""
         value={value}
@@ -30,6 +40,8 @@ const TaskComponent = () => {
         activeOutlineColor={Colors.backgroundDark}
         activeUnderlineColor={Colors.backgroundDark}
         underlineColor={Colors.backgroundDark}
+        cursorColor={Colors.textAccent}
+        selectionColor={Colors.textGrey}
       />
     </View>
   );
