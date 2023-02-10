@@ -1,8 +1,9 @@
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import React, {useRef, useState} from 'react';
 import {ScrollView, SafeAreaView, View} from 'react-native';
-import {FAB, Text} from 'react-native-paper';
+import {FAB, Text, TextInput} from 'react-native-paper';
 import MyBottomSheet from '../components/BottomSheetComponent';
+import {Input} from '../components/InputComponent';
 import TaskComponent from '../components/TaskComponent';
 
 import {Colors} from '../style/Colors';
@@ -12,6 +13,7 @@ import {Fonts} from '../style/Fonts';
 export default function TaskScreen() {
   const [clicked, setClicked] = useState(false);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const [value, setValue] = useState('');
 
   const handlePresentModal = () => {
     bottomSheetModalRef.current?.present();
@@ -60,20 +62,46 @@ export default function TaskScreen() {
           <TaskComponent />
         </View>
       </ScrollView>
-
-      <FAB
-        icon="plus"
+      <View
         style={{
           position: 'absolute',
           bottom: '4%',
+          flex: 1,
+          paddingVertical: '2%',
           alignSelf: 'center',
-          backgroundColor: Colors.backgroundAccentDark,
-        }}
-        label="New Task"
-        color={Colors.textDark}
-        onPress={() => handlePresentModal()}
-      />
-      <MyBottomSheet bottomSheetModalRef={bottomSheetModalRef} />
+          alignContent: 'center',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+        <TextInput
+          style={{
+            backgroundColor: Colors.backgroundDark,
+            flex: 1,
+            borderTopEndRadius: 4,
+            borderTopStartRadius: 4,
+            borderBottomEndRadius: 4,
+            borderBottomStartRadius: 4,
+          }}
+          textColor={Colors.textPrimary}
+          outlineColor=""
+          value={value}
+          onChangeText={value => setValue(value)}
+          activeOutlineColor={Colors.backgroundDark}
+          activeUnderlineColor={Colors.backgroundDark}
+          underlineStyle={{height: 0}}
+          cursorColor={Colors.textAccent}
+          selectionColor={Colors.textGrey}
+        />
+        <FAB
+          icon="plus"
+          style={{
+            backgroundColor: Colors.backgroundAccentDark,
+            marginLeft: '2%',
+          }}
+          color={Colors.textDark}
+          onPress={() => handlePresentModal()}
+        />
+      </View>
     </SafeAreaView>
   );
 }

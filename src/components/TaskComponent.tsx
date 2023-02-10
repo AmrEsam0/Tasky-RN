@@ -6,7 +6,6 @@ import {Colors} from '../style/Colors';
 const TaskComponent = () => {
   const [taskCheck, setTaskCheck] = useState(false);
   const [value, setValue] = useState('');
-  const [borderColor, setBorderColor] = useState(Colors.backgroundLight);
   return (
     <View
       style={{
@@ -15,8 +14,6 @@ const TaskComponent = () => {
         marginHorizontal: '1%',
         marginBottom: '6%',
         alignItems: 'center',
-        // borderColor: borderColor,
-        // borderWidth: 1,
         borderRadius: 10,
         padding: '1%',
       }}>
@@ -29,7 +26,7 @@ const TaskComponent = () => {
         style={{
           backgroundColor: Colors.backgroundDark,
           flex: 1,
-          textDecorationLine: taskCheck ? 'line-through' : 'none',
+          textDecorationLine: 'line-through',
         }}
         textColor={Colors.textPrimary}
         outlineColor=""
@@ -39,7 +36,7 @@ const TaskComponent = () => {
         outlineStyle={{borderRadius: 0, borderWidth: 0}}
         activeOutlineColor={Colors.backgroundDark}
         activeUnderlineColor={Colors.backgroundDark}
-        underlineColor={Colors.backgroundDark}
+        underlineStyle={{height: 0}}
         cursorColor={Colors.textAccent}
         selectionColor={Colors.textGrey}
       />
