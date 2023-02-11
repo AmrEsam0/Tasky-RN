@@ -65,15 +65,24 @@ export default function TaskScreen() {
             marginBottom: '30%',
             paddingVertical: '4%',
           }}>
-          {todoList.map((item, index) => {
-            if (item !== '') {
-              return <TaskComponent key={index} taskName={item} />;
-            } else if (todoList.length === 1) {
-              return (
-                <Text style={{color: Colors.textGrey}}>No tasks yet!</Text>
-              );
-            }
-          })}
+          {todoList.length === 0 ? (
+            <Text
+              style={{
+                marginTop: '50%',
+                color: Colors.textGrey,
+                alignSelf: 'center',
+                fontSize: 30,
+                fontFamily: Fonts.TextLight,
+              }}>
+              No tasks yet!
+            </Text>
+          ) : (
+            todoList.map((item, index) => {
+              if (item !== '') {
+                return <TaskComponent key={index} taskName={item} />;
+              }
+            })
+          )}
         </View>
       </ScrollView>
       <View
@@ -95,7 +104,7 @@ export default function TaskScreen() {
             borderTopStartRadius: 4,
             borderBottomEndRadius: 4,
             borderBottomStartRadius: 4,
-            borderColor: Colors.backgroundAccent,
+            borderColor: Colors.backgroundAccentDark,
             borderWidth: 1,
           }}
           textColor={Colors.textPrimary}
@@ -112,8 +121,10 @@ export default function TaskScreen() {
         />
         <FAB
           icon={isFocused ? 'check' : 'plus'}
+          animated={true}
           style={{
             backgroundColor: Colors.backgroundAccentDark,
+            borderRadius: 4,
             marginLeft: '2%',
           }}
           color={Colors.textDark}
