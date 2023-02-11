@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, SafeAreaView, View, Keyboard} from 'react-native';
 import {FAB, Text, TextInput} from 'react-native-paper';
 import TaskComponent from '../components/TaskComponent';
-
+import {supabase} from '../database/Supabase';
 import {Colors} from '../style/Colors';
 import {Fonts} from '../style/Fonts';
 
@@ -11,12 +11,20 @@ export default function TaskScreen() {
   const list = [] as {value: string; isComplete: boolean}[];
   const [todoList, setTodoList] = useState(list);
   const [value, setValue] = useState('');
-  // const [taskDone, setTaskDone] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
 
+  // useEffect(() => {
+  //   setTodoList(list);
+  // }, []);
+  const getItems = async () => {
+    let {data: TodoList, error} = await supabase
+      .from('TodoList')
+      .select('taskName');
+    return TodoList;
+  };
   useEffect(() => {
-    setTodoList(list);
-  }, []);
+    getItems().then(items => console.log('=> ', items));
+  });
 
   const addTask = (value: string, isComplete: boolean) => {
     setTodoList([...todoList, {value, isComplete}]);
@@ -136,7 +144,9 @@ export default function TaskScreen() {
           }}
           color={Colors.textDark}
           onPress={() => {
-            addTask(value, false);
+            if (value) {
+              addTask(value, false);
+            }
           }}
         />
       </View>
