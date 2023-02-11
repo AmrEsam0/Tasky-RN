@@ -8,10 +8,7 @@ import {Fonts} from '../style/Fonts';
 
 //TODO: LANDING PAGE, YO!
 export default function TaskScreen() {
-  const list = [
-    {value: 'Task 1', isComplete: false},
-    {value: 'Task 2', isComplete: true},
-  ];
+  const list = [] as {value: string; isComplete: boolean}[];
   const [todoList, setTodoList] = useState(list);
   const [value, setValue] = useState('');
   // const [taskDone, setTaskDone] = useState(true);
