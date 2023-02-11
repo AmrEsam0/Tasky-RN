@@ -3,9 +3,14 @@ import {View} from 'react-native';
 import {Checkbox, Text, TextInput} from 'react-native-paper';
 import {Colors} from '../style/Colors';
 
-const TaskComponent = ({taskName}: {taskName: string}) => {
-  const [taskCheck, setTaskCheck] = useState(false);
-  const [value, setValue] = useState('');
+const TaskComponent = ({
+  taskName,
+  isComplete,
+}: {
+  taskName: string;
+  isComplete: boolean;
+}) => {
+  const [taskCheck, setTaskCheck] = useState(isComplete);
   return (
     <View
       style={{
@@ -18,7 +23,7 @@ const TaskComponent = ({taskName}: {taskName: string}) => {
         padding: '1%',
       }}>
       <Checkbox
-        status={taskCheck ? 'checked' : 'unchecked'}
+        status={isComplete ? 'checked' : 'unchecked'}
         color={Colors.textAccent}
         onPress={() => setTaskCheck(!taskCheck)}
       />
@@ -26,8 +31,8 @@ const TaskComponent = ({taskName}: {taskName: string}) => {
         style={{
           backgroundColor: Colors.backgroundDark,
           flex: 1,
-          textDecorationLine: taskCheck ? 'line-through' : 'none',
-          color: taskCheck ? Colors.textGrey : Colors.textPrimary,
+          textDecorationLine: isComplete ? 'line-through' : 'none',
+          color: isComplete ? Colors.textGrey : Colors.textPrimary,
           marginStart: '2%',
           fontSize: 18,
         }}>

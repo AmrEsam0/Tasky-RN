@@ -8,17 +8,21 @@ import {Fonts} from '../style/Fonts';
 
 //TODO: LANDING PAGE, YO!
 export default function TaskScreen() {
-  const list = [] as string[];
+  const list = [
+    {value: 'Task 1', isComplete: false},
+    {value: 'Task 2', isComplete: true},
+  ];
   const [todoList, setTodoList] = useState(list);
   const [value, setValue] = useState('');
+  // const [taskDone, setTaskDone] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     setTodoList(list);
   }, []);
 
-  const addTask = (value: string) => {
-    setTodoList([...todoList, value]);
+  const addTask = (value: string, isComplete: boolean) => {
+    setTodoList([...todoList, {value, isComplete}]);
     setValue('');
     setIsFocused(false);
   };
@@ -78,8 +82,14 @@ export default function TaskScreen() {
             </Text>
           ) : (
             todoList.map((item, index) => {
-              if (item !== '') {
-                return <TaskComponent key={index} taskName={item} />;
+              if (item.value !== '') {
+                return (
+                  <TaskComponent
+                    key={index}
+                    taskName={item.value}
+                    isComplete={item.isComplete}
+                  />
+                );
               }
             })
           )}
@@ -129,7 +139,7 @@ export default function TaskScreen() {
           }}
           color={Colors.textDark}
           onPress={() => {
-            addTask(value);
+            addTask(value, false);
           }}
         />
       </View>
