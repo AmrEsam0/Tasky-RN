@@ -11,6 +11,8 @@ const TaskComponent = ({
   isComplete: boolean;
 }) => {
   const [taskCheck, setTaskCheck] = useState(isComplete);
+  //make sure to update the isComplete value from props to the state
+  isComplete = taskCheck;
   return (
     <View
       style={{
@@ -23,16 +25,19 @@ const TaskComponent = ({
         padding: '1%',
       }}>
       <Checkbox
+        //initially use isComplete value from props to set the checkbox status after adding a new task
         status={isComplete ? 'checked' : 'unchecked'}
         color={Colors.textAccent}
-        onPress={() => setTaskCheck(!taskCheck)}
+        onPress={() => {
+          setTaskCheck(!taskCheck);
+        }}
       />
       <Text
         style={{
           backgroundColor: Colors.backgroundDark,
           flex: 1,
-          textDecorationLine: isComplete ? 'line-through' : 'none',
-          color: isComplete ? Colors.textGrey : Colors.textPrimary,
+          textDecorationLine: taskCheck ? 'line-through' : 'none',
+          color: taskCheck ? Colors.textGrey : Colors.textPrimary,
           marginStart: '2%',
           fontSize: 18,
         }}>
