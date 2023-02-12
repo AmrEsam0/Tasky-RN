@@ -13,14 +13,15 @@ export default function TaskScreen() {
   const [value, setValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
-  const getItems = async () => {
+  const getTasksFromSupabase = async () => {
     let {data: TodoList, error} = await supabase.from('TodoList').select('*');
     return TodoList;
   };
   useEffect(() => {
-    getItems().then(items => {
+    getTasksFromSupabase().then(items => {
+      items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
       setTodoList(items);
-      console.log(items?.map((item: any) => item.taskName));
+      console.log(items?.map((item: any) => item.id));
     });
   }, []);
 
