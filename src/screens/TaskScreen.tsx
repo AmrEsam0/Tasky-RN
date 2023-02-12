@@ -1,7 +1,18 @@
-import {getStateFromPath} from '@react-navigation/native';
 import React, {useCallback, useEffect, useState} from 'react';
-import {ScrollView, SafeAreaView, View, Keyboard} from 'react-native';
-import {FAB, Text, TextInput} from 'react-native-paper';
+import {
+  ScrollView,
+  SafeAreaView,
+  View,
+  Keyboard,
+  TouchableOpacity,
+} from 'react-native';
+import {
+  Divider,
+  FAB,
+  SegmentedButtons,
+  Text,
+  TextInput,
+} from 'react-native-paper';
 import TaskComponent from '../components/TaskComponent';
 import {supabase} from '../database/Supabase';
 import {Colors} from '../style/Colors';
@@ -12,12 +23,12 @@ export default function TaskScreen() {
   const list = [] as any[];
   const [todoList, setTodoList] = useState<any | null>(list);
   const [value, setValue] = useState('');
+  const [isComplete, setIsComplete] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-
-  const getTasksFromSupabase = async () => {
-    let {data: TodoList, error} = await supabase.from('TodoList').select('*');
-    return TodoList;
-  };
+  const [ongoingTabActive, setOngoingActive] = useState(true);
+  const [completedTabActive, setCompletedActive] = useState(false);
+  const [completedTasks, setCompletedTasks] = useState<any | null>(list);
+  const [ongoingTasks, setOngoingTasks] = useState<any | null>(list);
 
   const addTaskToSupabase = async ({
     taskName,
@@ -33,24 +44,81 @@ export default function TaskScreen() {
 
   //only runs once on mount
   useEffect(() => {
-    getTasksFromSupabase().then(items => {
+    getCompletedTasksFromSupabase().then(items => {
       items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
-      setTodoList(items);
+      setCompletedTasks(items);
+      console.log(items?.map((item: any) => item.taskName));
+    });
+    getOngoingTasksFromSupabase().then(items => {
+      items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
+      setOngoingTasks(items);
       console.log(items?.map((item: any) => item.taskName));
     });
   }, []);
 
   //runs every time it's called
   const getAndUpdateTasksFromSupabase = useCallback(async () => {
-    getTasksFromSupabase().then(items => {
+    getCompletedTasksFromSupabase().then(items => {
       items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
-      setTodoList(items);
+      setCompletedTasks(items);
     });
+    getOngoingTasksFromSupabase().then(items => {
+      items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
+      setOngoingTasks(items);
+    });
+    console.log('USECALLBACK');
   }, []);
 
   //delete task from supabase and update the list
   const deleteTaskFromSupabase = async (id: number) => {
     const {data, error} = await supabase.from('TodoList').delete().eq('id', id);
+    getAndUpdateTasksFromSupabase();
+  };
+
+  const getCompletedTasksFromSupabase = async () => {
+    let {data: TodoList, error} = await supabase
+      .from('TodoList')
+      .select('*')
+      .eq('isComplete', true);
+    return TodoList;
+  };
+
+  // const setCompletedTasksFromSupabase = useCallback(async () => {
+  //   getCompletedTasksFromSupabase().then(items => {
+  //     items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
+  //     setCompletedTasks(items);
+  //   });
+  //   console.log('USECALLBACK COMPLETED');
+  // }, []);
+
+  const getOngoingTasksFromSupabase = async () => {
+    let {data: TodoList, error} = await supabase
+      .from('TodoList')
+      .select('*')
+      .eq('isComplete', false);
+    return TodoList;
+  };
+
+  // const setOngoingTasksFromSupabase = useCallback(async () => {
+  //   getOngoingTasksFromSupabase().then(items => {
+  //     items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
+  //     setOngoingTasks(items);
+  //   });
+  //   console.log('USECALLBACK ONGOING');
+  // }, []);
+
+  const updateTaskCheckFromSupabase = async ({
+    id,
+    isComplete,
+  }: {
+    id: number;
+    isComplete: boolean;
+  }) => {
+    const {data, error} = await supabase
+      .from('TodoList')
+      .update({isComplete: !isComplete})
+      .eq('id', id);
+
     getAndUpdateTasksFromSupabase();
   };
 
@@ -64,6 +132,74 @@ export default function TaskScreen() {
         paddingHorizontal: '4%',
       }}>
       <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 38,
+          width: '96%',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20,
+          alignSelf: 'center',
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            setOngoingActive(true);
+            setCompletedActive(false);
+          }}
+          style={{
+            backgroundColor: ongoingTabActive
+              ? Colors.backgroundAccentDark
+              : Colors.textPrimary,
+            flex: 1,
+            height: '100%',
+            justifyContent: 'center',
+            borderTopLeftRadius: 20,
+            borderBottomLeftRadius: 20,
+          }}>
+          <Text
+            variant="bodyMedium"
+            style={{
+              textAlign: 'center',
+              alignSelf: 'center',
+              fontFamily: ongoingTabActive ? Fonts.TextBold : Fonts.TextNormal,
+            }}>
+            Ongoing
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            setOngoingActive(false);
+            setCompletedActive(true);
+          }}
+          style={{
+            backgroundColor: completedTabActive
+              ? Colors.backgroundAccentDark
+              : Colors.textPrimary,
+            flex: 1,
+            marginLeft: '1%',
+            height: '100%',
+            justifyContent: 'center',
+            borderTopRightRadius: 20,
+            borderBottomRightRadius: 20,
+          }}>
+          <Text
+            variant="bodyMedium"
+            style={{
+              textAlign: 'center',
+              alignSelf: 'center',
+              fontFamily: completedTabActive
+                ? Fonts.TextBold
+                : Fonts.TextNormal,
+            }}>
+            Completed
+          </Text>
+        </TouchableOpacity>
+      </View>
+      {/* <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
@@ -86,17 +222,17 @@ export default function TaskScreen() {
             backgroundColor: Colors.backgroundAccent,
           }}
         />
-      </View>
+      </View> */}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             marginBottom: '30%',
             paddingVertical: '4%',
           }}>
-          {todoList.length === 0 ? (
+          {ongoingTasks.length === 0 ? (
             <Text
               style={{
-                marginTop: '50%',
+                marginTop: '70%',
                 color: Colors.textGrey,
                 alignSelf: 'center',
                 fontSize: 30,
@@ -104,8 +240,23 @@ export default function TaskScreen() {
               }}>
               No tasks yet!
             </Text>
-          ) : (
-            todoList.map(
+          ) : // todoList.map(
+          //   (item: {taskName: string; isComplete: boolean; id: number}) => {
+          //     if (item.taskName !== '') {
+          //       return (
+          //         <TaskComponent
+          //           key={item.id}
+          //           taskName={item.taskName}
+          //           isComplete={item.isComplete}
+          //           taskID={item.id}
+          //           deleteTask={() => deleteTaskFromSupabase(item.id)}
+          //         />
+          //       );
+          //     }
+          //   },
+          // )
+          ongoingTabActive ? (
+            ongoingTasks.map(
               (item: {taskName: string; isComplete: boolean; id: number}) => {
                 if (item.taskName !== '') {
                   return (
@@ -115,6 +266,34 @@ export default function TaskScreen() {
                       isComplete={item.isComplete}
                       taskID={item.id}
                       deleteTask={() => deleteTaskFromSupabase(item.id)}
+                      updateTask={(id, isComplete) =>
+                        updateTaskCheckFromSupabase({
+                          id: item.id,
+                          isComplete: item.isComplete,
+                        })
+                      }
+                    />
+                  );
+                }
+              },
+            )
+          ) : (
+            completedTasks.map(
+              (item: {taskName: string; isComplete: boolean; id: number}) => {
+                if (item.taskName !== '') {
+                  return (
+                    <TaskComponent
+                      key={item.id}
+                      taskName={item.taskName}
+                      isComplete={item.isComplete}
+                      taskID={item.id}
+                      deleteTask={() => deleteTaskFromSupabase(item.id)}
+                      updateTask={(id, isComplete) =>
+                        updateTaskCheckFromSupabase({
+                          id: item.id,
+                          isComplete: item.isComplete,
+                        })
+                      }
                     />
                   );
                 }
@@ -169,7 +348,7 @@ export default function TaskScreen() {
           onPress={() => {
             if (value) {
               // addTask(value, false);
-              addTaskToSupabase({taskName: value, isComplete: false});
+              addTaskToSupabase({taskName: value, isComplete: isComplete});
               getAndUpdateTasksFromSupabase();
               Keyboard.dismiss();
               setValue('');
