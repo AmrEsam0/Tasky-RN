@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import {getStateFromPath} from '@react-navigation/native';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ScrollView, SafeAreaView, View, Keyboard} from 'react-native';
 import {FAB, Text, TextInput} from 'react-native-paper';
 import TaskComponent from '../components/TaskComponent';
@@ -17,22 +18,35 @@ export default function TaskScreen() {
     let {data: TodoList, error} = await supabase.from('TodoList').select('*');
     return TodoList;
   };
+
+  const addTaskToSupabase = async ({
+    taskName,
+    isComplete,
+  }: {
+    taskName: string;
+    isComplete: boolean;
+  }) => {
+    const {data, error} = await supabase
+      .from('TodoList')
+      .insert([{taskName: taskName, isComplete: isComplete}]);
+  };
+
+  //only runs once on mount
   useEffect(() => {
     getTasksFromSupabase().then(items => {
       items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
       setTodoList(items);
-      console.log(items?.map((item: any) => item.id));
+      console.log(items?.map((item: any) => item.taskName));
     });
   }, []);
 
-  const addTask = (value: string, isComplete: boolean) => {
-    setTodoList([...todoList, {value, isComplete}]);
-    setValue('');
-    setIsFocused(false);
-  };
-  if (isFocused === false) {
-    Keyboard.dismiss();
-  }
+  //runs every time it's called
+  const getAndUpdateTasksFromSupabase = useCallback(async () => {
+    getTasksFromSupabase().then(items => {
+      items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
+      setTodoList(items);
+    });
+  }, []);
 
   return (
     <SafeAreaView
@@ -146,7 +160,11 @@ export default function TaskScreen() {
           color={Colors.textDark}
           onPress={() => {
             if (value) {
-              addTask(value, false);
+              // addTask(value, false);
+              addTaskToSupabase({taskName: value, isComplete: false});
+              getAndUpdateTasksFromSupabase();
+              Keyboard.dismiss();
+              setValue('');
             }
           }}
         />
