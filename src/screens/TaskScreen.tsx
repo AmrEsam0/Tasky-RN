@@ -8,23 +8,21 @@ import {Fonts} from '../style/Fonts';
 
 //TODO: LANDING PAGE, YO!
 export default function TaskScreen() {
-  const list = [] as {value: string; isComplete: boolean}[];
-  const [todoList, setTodoList] = useState(list);
+  const list = [] as any[];
+  const [todoList, setTodoList] = useState<any | null>(list);
   const [value, setValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
-  // useEffect(() => {
-  //   setTodoList(list);
-  // }, []);
   const getItems = async () => {
-    let {data: TodoList, error} = await supabase
-      .from('TodoList')
-      .select('taskName');
+    let {data: TodoList, error} = await supabase.from('TodoList').select('*');
     return TodoList;
   };
   useEffect(() => {
-    getItems().then(items => console.log('=> ', items));
-  });
+    getItems().then(items => {
+      setTodoList(items);
+      console.log(items?.map((item: any) => item.taskName));
+    });
+  }, []);
 
   const addTask = (value: string, isComplete: boolean) => {
     setTodoList([...todoList, {value, isComplete}]);
@@ -86,17 +84,19 @@ export default function TaskScreen() {
               No tasks yet!
             </Text>
           ) : (
-            todoList.map((item, index) => {
-              if (item.value !== '') {
-                return (
-                  <TaskComponent
-                    key={index}
-                    taskName={item.value}
-                    isComplete={item.isComplete}
-                  />
-                );
-              }
-            })
+            todoList.map(
+              (item: {taskName: string; isComplete: boolean; id: number}) => {
+                if (item.taskName !== '') {
+                  return (
+                    <TaskComponent
+                      key={item.id}
+                      taskName={item.taskName}
+                      isComplete={item.isComplete}
+                    />
+                  );
+                }
+              },
+            )
           )}
         </View>
       </ScrollView>
