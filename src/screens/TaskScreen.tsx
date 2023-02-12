@@ -48,6 +48,12 @@ export default function TaskScreen() {
     });
   }, []);
 
+  //delete task from supabase and update the list
+  const deleteTaskFromSupabase = async (id: number) => {
+    const {data, error} = await supabase.from('TodoList').delete().eq('id', id);
+    getAndUpdateTasksFromSupabase();
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -107,6 +113,8 @@ export default function TaskScreen() {
                       key={item.id}
                       taskName={item.taskName}
                       isComplete={item.isComplete}
+                      taskID={item.id}
+                      deleteTask={() => deleteTaskFromSupabase(item.id)}
                     />
                   );
                 }

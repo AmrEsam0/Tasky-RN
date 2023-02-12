@@ -2,6 +2,7 @@ export const Colors = {
   textPrimary: '#CACACA',
   textGrey: '#666666',
   textDark: '#111111',
+  textError: '#A60000',
   backgroundLighter: '#F9F9F9',
   backgroundLight: '#F9F9F98F',
   backgroundDark: '#1C1C23',

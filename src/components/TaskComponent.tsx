@@ -1,14 +1,18 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
-import {Checkbox, Text, TextInput} from 'react-native-paper';
+import {Checkbox, IconButton, Text, TextInput} from 'react-native-paper';
 import {Colors} from '../style/Colors';
 
 const TaskComponent = ({
   taskName,
   isComplete,
+  deleteTask,
+  taskID,
 }: {
   taskName: string;
   isComplete: boolean;
+  taskID: number;
+  deleteTask: (id: number) => Promise<void>;
 }) => {
   const [taskCheck, setTaskCheck] = useState(isComplete);
   //make sure to update the isComplete value from props to the state
@@ -43,6 +47,11 @@ const TaskComponent = ({
         }}>
         {taskName}
       </Text>
+      <IconButton
+        icon={'delete'}
+        iconColor={Colors.textError}
+        onPress={() => deleteTask(taskID)}
+      />
     </View>
   );
 };
