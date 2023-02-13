@@ -6,13 +6,7 @@ import {
   Keyboard,
   TouchableOpacity,
 } from 'react-native';
-import {
-  Divider,
-  FAB,
-  SegmentedButtons,
-  Text,
-  TextInput,
-} from 'react-native-paper';
+import {FAB, Text, TextInput} from 'react-native-paper';
 import TaskComponent from '../components/TaskComponent';
 import {supabase} from '../database/Supabase';
 import {Colors} from '../style/Colors';
@@ -83,14 +77,6 @@ export default function TaskScreen() {
     return TodoList;
   };
 
-  // const setCompletedTasksFromSupabase = useCallback(async () => {
-  //   getCompletedTasksFromSupabase().then(items => {
-  //     items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
-  //     setCompletedTasks(items);
-  //   });
-  //   console.log('USECALLBACK COMPLETED');
-  // }, []);
-
   const getOngoingTasksFromSupabase = async () => {
     let {data: TodoList, error} = await supabase
       .from('TodoList')
@@ -98,14 +84,6 @@ export default function TaskScreen() {
       .eq('isComplete', false);
     return TodoList;
   };
-
-  // const setOngoingTasksFromSupabase = useCallback(async () => {
-  //   getOngoingTasksFromSupabase().then(items => {
-  //     items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
-  //     setOngoingTasks(items);
-  //   });
-  //   console.log('USECALLBACK ONGOING');
-  // }, []);
 
   const updateTaskCheckFromSupabase = async ({
     id,
@@ -136,12 +114,12 @@ export default function TaskScreen() {
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          height: 38,
+          height: '6%',
           width: '96%',
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          borderBottomLeftRadius: 20,
-          borderBottomRightRadius: 20,
+          // borderTopLeftRadius: 20,
+          // borderTopRightRadius: 20,
+          // borderBottomLeftRadius: 20,
+          // borderBottomRightRadius: 20,
           alignSelf: 'center',
           marginBottom: '4%',
         }}>
@@ -200,30 +178,7 @@ export default function TaskScreen() {
           </Text>
         </TouchableOpacity>
       </View>
-      {/* <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: '4%',
-        }}>
-        <Text
-          variant="headlineLarge"
-          style={{
-            color: Colors.textPrimary,
-            paddingRight: '6%',
-            fontFamily: Fonts.TextMedium,
-          }}>
-          Tasky
-        </Text>
-        <View
-          style={{
-            height: 1,
-            flex: 1,
-            backgroundColor: Colors.backgroundAccent,
-          }}
-        />
-      </View> */}
+
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
