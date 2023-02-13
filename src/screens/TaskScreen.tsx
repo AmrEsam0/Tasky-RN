@@ -151,8 +151,8 @@ export default function TaskScreen() {
           }}
           style={{
             backgroundColor: ongoingTabActive
-              ? Colors.backgroundAccentDark
-              : Colors.textPrimary,
+              ? Colors.backgroundLighter
+              : Colors.backgroundTabDark,
             flex: 1,
             height: '100%',
             justifyContent: 'center',
@@ -164,7 +164,8 @@ export default function TaskScreen() {
             style={{
               textAlign: 'center',
               alignSelf: 'center',
-              fontFamily: ongoingTabActive ? Fonts.TextBold : Fonts.TextNormal,
+              fontFamily: ongoingTabActive ? Fonts.TextBold : Fonts.TextLight,
+              color: ongoingTabActive ? Colors.textDark : Colors.textPrimary,
             }}>
             Ongoing
           </Text>
@@ -177,8 +178,8 @@ export default function TaskScreen() {
           }}
           style={{
             backgroundColor: completedTabActive
-              ? Colors.backgroundAccentDark
-              : Colors.textPrimary,
+              ? Colors.backgroundLighter
+              : Colors.backgroundTabDark,
             flex: 1,
             marginLeft: '1%',
             height: '100%',
@@ -191,9 +192,8 @@ export default function TaskScreen() {
             style={{
               textAlign: 'center',
               alignSelf: 'center',
-              fontFamily: completedTabActive
-                ? Fonts.TextBold
-                : Fonts.TextNormal,
+              fontFamily: completedTabActive ? Fonts.TextBold : Fonts.TextLight,
+              color: completedTabActive ? Colors.textDark : Colors.textPrimary,
             }}>
             Completed
           </Text>
@@ -341,7 +341,6 @@ export default function TaskScreen() {
           animated={true}
           style={{
             backgroundColor: Colors.backgroundAccentDark,
-            borderRadius: 4,
             marginLeft: '2%',
           }}
           color={Colors.textDark}

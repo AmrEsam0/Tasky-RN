@@ -10,4 +10,5 @@ export const Colors = {
   textAccent: '#FFBB01',
   backgroundAccent: '#FFBB01',
   backgroundAccentDark: '#BB8900',
+  backgroundTabDark: '#32323E',
 };
