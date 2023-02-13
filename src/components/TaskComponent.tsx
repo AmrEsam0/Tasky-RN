@@ -29,6 +29,8 @@ const TaskComponent = ({
         alignItems: 'center',
         borderRadius: 10,
         padding: '1%',
+        borderColor: Colors.backgroundTabDark,
+        borderWidth: 1,
       }}>
       <Checkbox
         //initially use isComplete value from props to set the checkbox status after adding a new task

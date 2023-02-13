@@ -128,7 +128,7 @@ export default function TaskScreen() {
         width: '100%',
         height: '100%',
         backgroundColor: Colors.backgroundDarkest,
-        paddingTop: '10%',
+        paddingTop: '4%',
         paddingHorizontal: '4%',
       }}>
       <View
@@ -143,6 +143,7 @@ export default function TaskScreen() {
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
           alignSelf: 'center',
+          marginBottom: '4%',
         }}>
         <TouchableOpacity
           onPress={() => {
@@ -229,7 +230,42 @@ export default function TaskScreen() {
             marginBottom: '30%',
             paddingVertical: '4%',
           }}>
-          {ongoingTasks.length === 0 ? (
+          {ongoingTabActive ? (
+            ongoingTasks.length === 0 ? (
+              <Text
+                style={{
+                  marginTop: '70%',
+                  color: Colors.textGrey,
+                  alignSelf: 'center',
+                  fontSize: 30,
+                  fontFamily: Fonts.TextLight,
+                }}>
+                Create a task!
+              </Text>
+            ) : (
+              ongoingTasks.map(
+                (item: {taskName: string; isComplete: boolean; id: number}) => {
+                  if (item.taskName !== '') {
+                    return (
+                      <TaskComponent
+                        key={item.id}
+                        taskName={item.taskName}
+                        isComplete={item.isComplete}
+                        taskID={item.id}
+                        deleteTask={() => deleteTaskFromSupabase(item.id)}
+                        updateTask={(id, isComplete) =>
+                          updateTaskCheckFromSupabase({
+                            id: item.id,
+                            isComplete: item.isComplete,
+                          })
+                        }
+                      />
+                    );
+                  }
+                },
+              )
+            )
+          ) : completedTasks.length === 0 ? (
             <Text
               style={{
                 marginTop: '70%',
@@ -238,45 +274,8 @@ export default function TaskScreen() {
                 fontSize: 30,
                 fontFamily: Fonts.TextLight,
               }}>
-              No tasks yet!
+              No completed tasks yet!
             </Text>
-          ) : // todoList.map(
-          //   (item: {taskName: string; isComplete: boolean; id: number}) => {
-          //     if (item.taskName !== '') {
-          //       return (
-          //         <TaskComponent
-          //           key={item.id}
-          //           taskName={item.taskName}
-          //           isComplete={item.isComplete}
-          //           taskID={item.id}
-          //           deleteTask={() => deleteTaskFromSupabase(item.id)}
-          //         />
-          //       );
-          //     }
-          //   },
-          // )
-          ongoingTabActive ? (
-            ongoingTasks.map(
-              (item: {taskName: string; isComplete: boolean; id: number}) => {
-                if (item.taskName !== '') {
-                  return (
-                    <TaskComponent
-                      key={item.id}
-                      taskName={item.taskName}
-                      isComplete={item.isComplete}
-                      taskID={item.id}
-                      deleteTask={() => deleteTaskFromSupabase(item.id)}
-                      updateTask={(id, isComplete) =>
-                        updateTaskCheckFromSupabase({
-                          id: item.id,
-                          isComplete: item.isComplete,
-                        })
-                      }
-                    />
-                  );
-                }
-              },
-            )
           ) : (
             completedTasks.map(
               (item: {taskName: string; isComplete: boolean; id: number}) => {
@@ -315,14 +314,12 @@ export default function TaskScreen() {
         }}>
         <TextInput
           style={{
-            backgroundColor: Colors.backgroundDark,
+            backgroundColor: Colors.backgroundTabDark,
             flex: 1,
             borderTopEndRadius: 4,
             borderTopStartRadius: 4,
             borderBottomEndRadius: 4,
             borderBottomStartRadius: 4,
-            borderColor: Colors.backgroundAccentDark,
-            borderWidth: 1,
           }}
           textColor={Colors.textPrimary}
           outlineColor=""
