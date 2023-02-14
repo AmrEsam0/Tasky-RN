@@ -119,6 +119,28 @@ export default function TaskScreen() {
     }
   };
 
+  //count how many tasks are completed
+  const countCompletedTasks = () => {
+    let count = 0;
+    todoList.forEach((item: any) => {
+      if (item.isComplete === true) {
+        count++;
+      }
+    });
+    return count;
+  };
+
+  //count how many tasks are ongoing
+  const countOngoingTasks = () => {
+    let count = 0;
+    todoList.forEach((item: any) => {
+      if (item.isComplete === false) {
+        count++;
+      }
+    });
+    return count;
+  };
+
   useEffect(() => {
     // setTodoList(todoList);
     getData().then(data => {
@@ -226,8 +248,20 @@ export default function TaskScreen() {
                 }}>
                 Create a task!
               </Text>
+            ) : // ongoingTasks.map(
+
+            countOngoingTasks() === 0 ? (
+              <Text
+                style={{
+                  marginTop: '70%',
+                  color: Colors.textGrey,
+                  alignSelf: 'center',
+                  fontSize: 30,
+                  fontFamily: Fonts.TextLight,
+                }}>
+                No ongoing tasks!
+              </Text>
             ) : (
-              // ongoingTasks.map(
               todoList.map(
                 (item: {isComplete: boolean; value: string}, index: number) => {
                   if (item.value !== '' && item.isComplete === false) {
@@ -261,8 +295,19 @@ export default function TaskScreen() {
               }}>
               No completed tasks yet!
             </Text>
+          ) : // completedTasks.map(
+          countCompletedTasks() === 0 ? (
+            <Text
+              style={{
+                marginTop: '70%',
+                color: Colors.textGrey,
+                alignSelf: 'center',
+                fontSize: 30,
+                fontFamily: Fonts.TextLight,
+              }}>
+              No ongoing tasks!
+            </Text>
           ) : (
-            // completedTasks.map(
             todoList.map(
               (item: {isComplete: boolean; value: string}, index: number) => {
                 if (item.value !== '' && item.isComplete === true) {
