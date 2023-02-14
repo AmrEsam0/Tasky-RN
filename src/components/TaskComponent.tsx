@@ -13,8 +13,8 @@ const TaskComponent = ({
   taskName: string;
   isComplete: boolean;
   taskID: number;
-  deleteTask: (id: number) => Promise<void>;
-  updateTask: (id: number, isComplete: boolean) => Promise<void>;
+  deleteTask: (id: number) => void;
+  updateTask: (id: number, isComplete: boolean) => void;
 }) => {
   const [taskCheck, setTaskCheck] = useState(isComplete);
   //make sure to update the isComplete value from props to the state

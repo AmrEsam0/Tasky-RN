@@ -8,97 +8,125 @@ import {
 } from 'react-native';
 import {FAB, Text, TextInput} from 'react-native-paper';
 import TaskComponent from '../components/TaskComponent';
-import {supabase} from '../database/Supabase';
 import {Colors} from '../style/Colors';
 import {Fonts} from '../style/Fonts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+interface todo {
+  value: string;
+  isComplete: boolean;
+}
 
 //TODO: LANDING PAGE, YO!
 export default function TaskScreen() {
-  const list = [] as any[];
-  const [todoList, setTodoList] = useState<any | null>(list);
+  const [todoList, setTodoList] = useState<
+    {
+      value: string;
+      isComplete: boolean;
+      id: number;
+    }[]
+  >([]);
   const [value, setValue] = useState('');
   const [isComplete, setIsComplete] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [ongoingTabActive, setOngoingActive] = useState(true);
   const [completedTabActive, setCompletedActive] = useState(false);
-  const [completedTasks, setCompletedTasks] = useState<any | null>(list);
-  const [ongoingTasks, setOngoingTasks] = useState<any | null>(list);
+  const [completedTasks, setCompletedTasks] = useState([
+    {value: '', isComplete: false, id: 0},
+  ]);
+  const [ongoingTasks, setOngoingTasks] = useState([
+    {
+      value: '',
+      isComplete: false,
+      id: 0,
+    },
+  ]);
 
-  const addTaskToSupabase = async ({
-    taskName,
-    isComplete,
-  }: {
-    taskName: string;
-    isComplete: boolean;
-  }) => {
-    const {data, error} = await supabase
-      .from('TodoList')
-      .insert([{taskName: taskName, isComplete: isComplete}]);
+  if (isFocused === false) {
+    Keyboard.dismiss();
+  }
+
+  const getRandomID = () => {
+    return Math.floor(Math.random() * 1000);
   };
 
-  //only runs once on mount
+  // const dataRefresher = useCallback(() => {
+  //   // setTodoList(todoList);
+  //   getData().then(data => {
+  //     if (data !== null) {
+  //       setTodoList(data);
+  //     }
+  //   });
+  // }, []);
+
+  const addTask = (value: string, isComplete: boolean, id: number) => {
+    if (value !== '') {
+      const newList = [
+        ...todoList,
+        {value: value, isComplete: isComplete, id: id},
+      ];
+      // const newList = [{value: 'asd', isComplete: false, id: 0}];
+      setTodoList(newList);
+      setValue('');
+      storeData(newList);
+    }
+  };
+
+  const deleteTask = (id: number) => {
+    const newList = todoList.filter((item: any, index: number) => {
+      return index !== id;
+    });
+    setTodoList(newList);
+    storeData(newList);
+  };
+
+  const updateTask = (id: number, isComplete: boolean) => {
+    const newList = todoList.map((item: any, index: number) => {
+      if (index === id) {
+        return {...item, isComplete: !isComplete};
+      }
+      return item;
+    });
+    setTodoList(newList);
+    storeData(newList);
+  };
+
+  const storeData = async (value: any) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('todoStorage', jsonValue);
+      console.log('data saved');
+    } catch (e) {
+      // saving error
+      console.log('error saving data => ', e);
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('todoStorage');
+      if (jsonValue === null) {
+        console.log('null data read');
+      }
+      console.log('data read');
+      jsonValue != null
+        ? console.log(JSON.parse(jsonValue))
+        : console.log('null data read');
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      // error reading value
+      console.log('error reading data => ', e);
+    }
+  };
+
   useEffect(() => {
-    getCompletedTasksFromSupabase().then(items => {
-      items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
-      setCompletedTasks(items);
-      console.log(items?.map((item: any) => item.taskName));
-    });
-    getOngoingTasksFromSupabase().then(items => {
-      items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
-      setOngoingTasks(items);
-      console.log(items?.map((item: any) => item.taskName));
+    // setTodoList(todoList);
+    getData().then(data => {
+      if (data !== null) {
+        setTodoList(data);
+      }
     });
   }, []);
-
-  //runs every time it's called
-  const getAndUpdateTasksFromSupabase = useCallback(async () => {
-    getCompletedTasksFromSupabase().then(items => {
-      items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
-      setCompletedTasks(items);
-    });
-    getOngoingTasksFromSupabase().then(items => {
-      items?.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
-      setOngoingTasks(items);
-    });
-    console.log('USECALLBACK');
-  }, []);
-
-  //delete task from supabase and update the list
-  const deleteTaskFromSupabase = async (id: number) => {
-    const {data, error} = await supabase.from('TodoList').delete().eq('id', id);
-    getAndUpdateTasksFromSupabase();
-  };
-
-  const getCompletedTasksFromSupabase = async () => {
-    let {data: TodoList, error} = await supabase
-      .from('TodoList')
-      .select('*')
-      .eq('isComplete', true);
-    return TodoList;
-  };
-
-  const getOngoingTasksFromSupabase = async () => {
-    let {data: TodoList, error} = await supabase
-      .from('TodoList')
-      .select('*')
-      .eq('isComplete', false);
-    return TodoList;
-  };
-
-  const updateTaskCheckFromSupabase = async ({
-    id,
-    isComplete,
-  }: {
-    id: number;
-    isComplete: boolean;
-  }) => {
-    const {data, error} = await supabase
-      .from('TodoList')
-      .update({isComplete: !isComplete})
-      .eq('id', id);
-
-    getAndUpdateTasksFromSupabase();
-  };
 
   return (
     <SafeAreaView
@@ -114,12 +142,12 @@ export default function TaskScreen() {
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '6%',
+          height: 38,
           width: '96%',
-          // borderTopLeftRadius: 20,
-          // borderTopRightRadius: 20,
-          // borderBottomLeftRadius: 20,
-          // borderBottomRightRadius: 20,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20,
           alignSelf: 'center',
           marginBottom: '4%',
         }}>
@@ -178,7 +206,6 @@ export default function TaskScreen() {
           </Text>
         </TouchableOpacity>
       </View>
-
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
@@ -186,7 +213,9 @@ export default function TaskScreen() {
             paddingVertical: '4%',
           }}>
           {ongoingTabActive ? (
-            ongoingTasks.length === 0 ? (
+            // ongoingTasks.length === 0 ? (
+            // todoList.map(()
+            todoList.length === 0 ? (
               <Text
                 style={{
                   marginTop: '70%',
@@ -198,29 +227,30 @@ export default function TaskScreen() {
                 Create a task!
               </Text>
             ) : (
-              ongoingTasks.map(
-                (item: {taskName: string; isComplete: boolean; id: number}) => {
-                  if (item.taskName !== '') {
+              // ongoingTasks.map(
+              todoList.map(
+                (item: {isComplete: boolean; value: string}, index: number) => {
+                  if (item.value !== '' && item.isComplete === false) {
                     return (
                       <TaskComponent
-                        key={item.id}
-                        taskName={item.taskName}
+                        key={index}
+                        taskName={item.value}
                         isComplete={item.isComplete}
-                        taskID={item.id}
-                        deleteTask={() => deleteTaskFromSupabase(item.id)}
-                        updateTask={(id, isComplete) =>
-                          updateTaskCheckFromSupabase({
-                            id: item.id,
-                            isComplete: item.isComplete,
-                          })
-                        }
+                        taskID={index}
+                        updateTask={() => {
+                          updateTask(index, item.isComplete);
+                        }}
+                        deleteTask={() => {
+                          deleteTask(index);
+                        }}
                       />
                     );
                   }
                 },
               )
             )
-          ) : completedTasks.length === 0 ? (
+          ) : // completedTasks.length === 0 ? (
+          todoList.length === 0 ? (
             <Text
               style={{
                 marginTop: '70%',
@@ -232,28 +262,62 @@ export default function TaskScreen() {
               No completed tasks yet!
             </Text>
           ) : (
-            completedTasks.map(
-              (item: {taskName: string; isComplete: boolean; id: number}) => {
-                if (item.taskName !== '') {
+            // completedTasks.map(
+            todoList.map(
+              (item: {isComplete: boolean; value: string}, index: number) => {
+                if (item.value !== '' && item.isComplete === true) {
                   return (
                     <TaskComponent
-                      key={item.id}
-                      taskName={item.taskName}
+                      key={index}
+                      taskName={item.value}
                       isComplete={item.isComplete}
-                      taskID={item.id}
-                      deleteTask={() => deleteTaskFromSupabase(item.id)}
-                      updateTask={(id, isComplete) =>
-                        updateTaskCheckFromSupabase({
-                          id: item.id,
-                          isComplete: item.isComplete,
-                        })
-                      }
+                      taskID={index}
+                      updateTask={() => {
+                        updateTask(index, item.isComplete);
+                      }}
+                      deleteTask={() => {
+                        deleteTask(index);
+                      }}
                     />
                   );
                 }
               },
             )
           )}
+          {/* //simpler */}
+          {/* {todoList.length === 0 ? (
+            <Text
+              style={{
+                marginTop: '50%',
+                color: Colors.textGrey,
+                alignSelf: 'center',
+                fontSize: 30,
+                fontFamily: Fonts.TextLight,
+              }}>
+              No tasks yet!
+            </Text>
+          ) : (
+            todoList.map(
+              (item: {isComplete: boolean; value: string}, index: number) => {
+                if (item.value !== '') {
+                  return (
+                    <TaskComponent
+                      key={index}
+                      taskName={item.value}
+                      isComplete={item.isComplete}
+                      taskID={index}
+                      updateTask={() => {
+                        updateTask(index, item.isComplete);
+                      }}
+                      deleteTask={() => {
+                        deleteTask(index);
+                      }}
+                    />
+                  );
+                }
+              },
+            )
+          )} */}
         </View>
       </ScrollView>
       <View
@@ -287,6 +351,7 @@ export default function TaskScreen() {
           selectionColor={Colors.textGrey}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          placeholder="Add a task"
         />
         <FAB
           icon={isFocused ? 'check' : 'plus'}
@@ -298,11 +363,10 @@ export default function TaskScreen() {
           color={Colors.textDark}
           onPress={() => {
             if (value) {
-              // addTask(value, false);
-              addTaskToSupabase({taskName: value, isComplete: isComplete});
-              getAndUpdateTasksFromSupabase();
+              const taskID = getRandomID();
+              addTask(value, isComplete, taskID);
               Keyboard.dismiss();
-              setValue('');
+              // setValue('');
             }
           }}
         />
