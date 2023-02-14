@@ -19,28 +19,53 @@ interface todo {
 
 //TODO: LANDING PAGE, YO!
 export default function TaskScreen() {
-  const [todoList, setTodoList] = useState([{value: '', isComplete: false}]);
+  const [todoList, setTodoList] = useState<
+    {
+      value: string;
+      isComplete: boolean;
+      id: number;
+    }[]
+  >([]);
   const [value, setValue] = useState('');
-  const [trigger, setTrigger] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [ongoingTabActive, setOngoingActive] = useState(true);
   const [completedTabActive, setCompletedActive] = useState(false);
   const [completedTasks, setCompletedTasks] = useState([
-    {value: '', isComplete: false},
+    {value: '', isComplete: false, id: 0},
   ]);
-  const [ongoingTasks, setOngoingTasks] = useState({
-    value: '',
-    isComplete: false,
-  });
+  const [ongoingTasks, setOngoingTasks] = useState([
+    {
+      value: '',
+      isComplete: false,
+      id: 0,
+    },
+  ]);
 
   if (isFocused === false) {
     Keyboard.dismiss();
   }
 
-  const addTask = (value: string) => {
+  const getRandomID = () => {
+    return Math.floor(Math.random() * 1000);
+  };
+
+  // const dataRefresher = useCallback(() => {
+  //   // setTodoList(todoList);
+  //   getData().then(data => {
+  //     if (data !== null) {
+  //       setTodoList(data);
+  //     }
+  //   });
+  // }, []);
+
+  const addTask = (value: string, isComplete: boolean, id: number) => {
     if (value !== '') {
-      const newList = [...todoList, {value: value, isComplete: false}];
+      const newList = [
+        ...todoList,
+        {value: value, isComplete: isComplete, id: id},
+      ];
+      // const newList = [{value: 'asd', isComplete: false, id: 0}];
       setTodoList(newList);
       setValue('');
       storeData(newList);
@@ -50,6 +75,17 @@ export default function TaskScreen() {
   const deleteTask = (id: number) => {
     const newList = todoList.filter((item: any, index: number) => {
       return index !== id;
+    });
+    setTodoList(newList);
+    storeData(newList);
+  };
+
+  const updateTask = (id: number, isComplete: boolean) => {
+    const newList = todoList.map((item: any, index: number) => {
+      if (index === id) {
+        return {...item, isComplete: !isComplete};
+      }
+      return item;
     });
     setTodoList(newList);
     storeData(newList);
@@ -176,8 +212,9 @@ export default function TaskScreen() {
             marginBottom: '30%',
             paddingVertical: '4%',
           }}>
-          {/* {ongoingTabActive ? (
+          {ongoingTabActive ? (
             // ongoingTasks.length === 0 ? (
+            // todoList.map(()
             todoList.length === 0 ? (
               <Text
                 style={{
@@ -192,17 +229,23 @@ export default function TaskScreen() {
             ) : (
               // ongoingTasks.map(
               todoList.map(
-                (item: {taskName: string; isComplete: boolean; id: number}) => {
-                  // if (item.taskName !== '') {
-                  return (
-                    <TaskComponent
-                      key={item.id}
-                      taskName={item.taskName}
-                      isComplete={item.isComplete}
-                      taskID={item.id}
-                    />
-                  );
-                  // }
+                (item: {isComplete: boolean; value: string}, index: number) => {
+                  if (item.value !== '' && item.isComplete === false) {
+                    return (
+                      <TaskComponent
+                        key={index}
+                        taskName={item.value}
+                        isComplete={item.isComplete}
+                        taskID={index}
+                        updateTask={() => {
+                          updateTask(index, item.isComplete);
+                        }}
+                        deleteTask={() => {
+                          deleteTask(index);
+                        }}
+                      />
+                    );
+                  }
                 },
               )
             )
@@ -221,21 +264,28 @@ export default function TaskScreen() {
           ) : (
             // completedTasks.map(
             todoList.map(
-              (item: {taskName: string; isComplete: boolean; id: number}) => {
-                if (item.taskName !== '') {
+              (item: {isComplete: boolean; value: string}, index: number) => {
+                if (item.value !== '' && item.isComplete === true) {
                   return (
                     <TaskComponent
-                      key={item.id}
-                      taskName={item.taskName}
+                      key={index}
+                      taskName={item.value}
                       isComplete={item.isComplete}
-                      taskID={item.id}
+                      taskID={index}
+                      updateTask={() => {
+                        updateTask(index, item.isComplete);
+                      }}
+                      deleteTask={() => {
+                        deleteTask(index);
+                      }}
                     />
                   );
                 }
               },
             )
-          )} */}
-          {todoList.length === 0 ? (
+          )}
+          {/* //simpler */}
+          {/* {todoList.length === 0 ? (
             <Text
               style={{
                 marginTop: '50%',
@@ -256,6 +306,9 @@ export default function TaskScreen() {
                       taskName={item.value}
                       isComplete={item.isComplete}
                       taskID={index}
+                      updateTask={() => {
+                        updateTask(index, item.isComplete);
+                      }}
                       deleteTask={() => {
                         deleteTask(index);
                       }}
@@ -264,7 +317,7 @@ export default function TaskScreen() {
                 }
               },
             )
-          )}
+          )} */}
         </View>
       </ScrollView>
       <View
@@ -298,6 +351,7 @@ export default function TaskScreen() {
           selectionColor={Colors.textGrey}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          placeholder="Add a task"
         />
         <FAB
           icon={isFocused ? 'check' : 'plus'}
@@ -309,8 +363,8 @@ export default function TaskScreen() {
           color={Colors.textDark}
           onPress={() => {
             if (value) {
-              addTask(value);
-
+              const taskID = getRandomID();
+              addTask(value, isComplete, taskID);
               Keyboard.dismiss();
               // setValue('');
             }

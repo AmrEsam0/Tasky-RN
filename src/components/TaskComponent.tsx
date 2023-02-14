@@ -14,7 +14,7 @@ const TaskComponent = ({
   isComplete: boolean;
   taskID: number;
   deleteTask: (id: number) => void;
-  updateTask?: (id: number, isComplete: boolean) => Promise<void>;
+  updateTask: (id: number, isComplete: boolean) => void;
 }) => {
   const [taskCheck, setTaskCheck] = useState(isComplete);
   //make sure to update the isComplete value from props to the state
@@ -37,7 +37,7 @@ const TaskComponent = ({
         status={isComplete ? 'checked' : 'unchecked'}
         color={Colors.textAccent}
         onPress={() => {
-          // updateTask(taskID, taskCheck);
+          updateTask(taskID, taskCheck);
           setTaskCheck(!taskCheck);
         }}
       />
