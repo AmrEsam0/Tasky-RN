@@ -13,7 +13,7 @@ export default function App() {
     <GestureHandlerRootView style={{flex: 1}}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="LoginScreen"
+          initialRouteName="TaskScreen"
           screenOptions={({route}) => ({
             headerShown: false,
             statusBarColor:
