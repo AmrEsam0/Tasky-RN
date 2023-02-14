@@ -235,21 +235,6 @@ export default function TaskScreen() {
             paddingVertical: '4%',
           }}>
           {ongoingTabActive ? (
-            // ongoingTasks.length === 0 ? (
-            // todoList.map(()
-            todoList.length === 0 ? (
-              <Text
-                style={{
-                  marginTop: '70%',
-                  color: Colors.textGrey,
-                  alignSelf: 'center',
-                  fontSize: 30,
-                  fontFamily: Fonts.TextLight,
-                }}>
-                Create a task!
-              </Text>
-            ) : // ongoingTasks.map(
-
             countOngoingTasks() === 0 ? (
               <Text
                 style={{
@@ -283,8 +268,7 @@ export default function TaskScreen() {
                 },
               )
             )
-          ) : // completedTasks.length === 0 ? (
-          todoList.length === 0 ? (
+          ) : countCompletedTasks() === 0 ? (
             <Text
               style={{
                 marginTop: '70%',
@@ -294,18 +278,6 @@ export default function TaskScreen() {
                 fontFamily: Fonts.TextLight,
               }}>
               No completed tasks yet!
-            </Text>
-          ) : // completedTasks.map(
-          countCompletedTasks() === 0 ? (
-            <Text
-              style={{
-                marginTop: '70%',
-                color: Colors.textGrey,
-                alignSelf: 'center',
-                fontSize: 30,
-                fontFamily: Fonts.TextLight,
-              }}>
-              No ongoing tasks!
             </Text>
           ) : (
             todoList.map(
