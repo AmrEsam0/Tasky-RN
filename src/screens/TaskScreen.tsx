@@ -15,7 +15,7 @@ import {
   TextInput as RNTextInput,
   TextInputProps,
 } from 'react-native';
-import {FAB, Text, TextInput} from 'react-native-paper';
+import {Badge, FAB, Text, TextInput} from 'react-native-paper';
 import TaskComponent from '../components/TaskComponent';
 import {Colors} from '../style/Colors';
 import {Fonts} from '../style/Fonts';
@@ -240,6 +240,24 @@ export default function TaskScreen() {
             }}>
             Ongoing
           </Text>
+          <Badge
+            visible={countOngoingTasks() > 0 ? true : false}
+            style={{
+              position: 'absolute',
+              right: '5%',
+              backgroundColor: ongoingTabActive
+                ? Colors.backgroundAccent
+                : Colors.backgroundLight,
+              color: ongoingTabActive ? Colors.textDark : Colors.textDark,
+              fontSize: 10,
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              textAlign: 'center',
+              textAlignVertical: 'center',
+            }}>
+            {countOngoingTasks()}
+          </Badge>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -268,6 +286,24 @@ export default function TaskScreen() {
             }}>
             Completed
           </Text>
+          <Badge
+            visible={countCompletedTasks() > 0 ? true : false}
+            style={{
+              position: 'absolute',
+              right: '5%',
+              backgroundColor: completedTabActive
+                ? Colors.backgroundAccent
+                : Colors.backgroundLight,
+              color: completedTabActive ? Colors.textDark : Colors.textDark,
+              fontSize: 10,
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              textAlign: 'center',
+              textAlignVertical: 'center',
+            }}>
+            {countCompletedTasks()}
+          </Badge>
         </TouchableOpacity>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -349,40 +385,6 @@ export default function TaskScreen() {
               },
             )
           )}
-          {/* //simpler */}
-          {/* {todoList.length === 0 ? (
-            <Text
-              style={{
-                marginTop: '50%',
-                color: Colors.textGrey,
-                alignSelf: 'center',
-                fontSize: 30,
-                fontFamily: Fonts.TextLight,
-              }}>
-              No tasks yet!
-            </Text>
-          ) : (
-            todoList.map(
-              (item: {isComplete: boolean; value: string}, index: number) => {
-                if (item.value !== '') {
-                  return (
-                    <TaskComponent
-                      key={index}
-                      taskName={item.value}
-                      isComplete={item.isComplete}
-                      taskID={index}
-                      updateTask={() => {
-                        updateTask(index, item.isComplete);
-                      }}
-                      deleteTask={() => {
-                        deleteTask(index);
-                      }}
-                    />
-                  );
-                }
-              },
-            )
-          )} */}
         </View>
       </ScrollView>
       <View
@@ -437,6 +439,8 @@ export default function TaskScreen() {
             } else if (value) {
               const taskID = getRandomID();
               addTask(value, isComplete, taskID);
+              setIsFocused(false);
+              Keyboard.dismiss();
             } else {
               textInputRef.current?.focus();
             }
