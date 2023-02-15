@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {Checkbox, IconButton, Text, TextInput} from 'react-native-paper';
 import {Colors} from '../style/Colors';
 
@@ -32,26 +32,33 @@ const TaskComponent = ({
         borderColor: Colors.backgroundTabDark,
         borderWidth: 1,
       }}>
-      <Checkbox
-        //initially use isComplete value from props to set the checkbox status after adding a new task
-        status={isComplete ? 'checked' : 'unchecked'}
-        color={Colors.textAccent}
+      <TouchableOpacity
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
         onPress={() => {
           updateTask(taskID, taskCheck);
           setTaskCheck(!taskCheck);
-        }}
-      />
-      <Text
-        style={{
-          backgroundColor: Colors.backgroundDark,
-          flex: 1,
-          textDecorationLine: taskCheck ? 'line-through' : 'none',
-          color: taskCheck ? Colors.textGrey : Colors.textPrimary,
-          marginStart: '2%',
-          fontSize: 18,
         }}>
-        {taskName}
-      </Text>
+        <Checkbox
+          //initially use isComplete value from props to set the checkbox status after adding a new task
+          status={isComplete ? 'checked' : 'unchecked'}
+          color={Colors.textAccent}
+        />
+        <Text
+          style={{
+            backgroundColor: Colors.backgroundDark,
+            flex: 1,
+            textDecorationLine: taskCheck ? 'line-through' : 'none',
+            color: taskCheck ? Colors.textGrey : Colors.textPrimary,
+            marginStart: '2%',
+            fontSize: 18,
+          }}>
+          {taskName}
+        </Text>
+      </TouchableOpacity>
       <IconButton
         icon={'delete'}
         iconColor={Colors.textError}
