@@ -42,11 +42,9 @@ export default function TaskScreen() {
   const [completedTabActive, setCompletedActive] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingTaskID, setEditingTaskID] = useState(0);
+  const [emptyTaskValueTrigger, setEmptyTaskValueTrigger] = useState(false);
 
   let textInputRef = React.createRef<RNTextInput>();
-  if (isFocused === false) {
-    Keyboard.dismiss();
-  }
 
   const getRandomID = () => {
     return Math.floor(Math.random() * 1000);
@@ -101,19 +99,30 @@ export default function TaskScreen() {
         setIsEditing(true);
         setEditingTaskID(id);
 
+        setIsFocused(true);
         return {...item, value: value};
       }
       return item;
     });
     setTodoList(newList);
     storeData(newList);
+    setIsFocused(false);
   };
 
   const storeData = async (value: any) => {
     try {
-      const jsonValue = JSON.stringify(value);
+      //map over the list and delete all tasks that have empty values
+      const filteredList = value.filter((item: any) => {
+        return item.value !== '';
+      });
+      if (filteredList.length === 0) {
+        setEmptyTaskValueTrigger(true);
+      }
+
+      const jsonValue = JSON.stringify(filteredList);
       await AsyncStorage.setItem('todoStorage', jsonValue);
       console.log('data saved');
+      emptyTaskValueTrigger === true ? setEmptyTaskValueTrigger(false) : null;
     } catch (e) {
       // saving error
       console.log('error saving data => ', e);
@@ -158,6 +167,21 @@ export default function TaskScreen() {
     });
     return count;
   };
+
+  //hard reset
+  // useEffect(() => {
+  //   setTodoList([]);
+  //   storeData([]);
+  // }, []);
+
+  //better rerender twice than not at all or all the time :D
+  useEffect(() => {
+    getData().then(data => {
+      if (data !== null) {
+        setTodoList(data);
+      }
+    });
+  }, [emptyTaskValueTrigger]);
 
   useEffect(() => {
     // setTodoList(todoList);
@@ -397,7 +421,7 @@ export default function TaskScreen() {
           ref={textInputRef}
         />
         <FAB
-          icon={isFocused ? 'check' : 'plus'}
+          icon={isFocused || value ? 'check' : 'plus'}
           animated={true}
           style={{
             backgroundColor: Colors.backgroundAccentDark,
@@ -407,13 +431,12 @@ export default function TaskScreen() {
           onPress={() => {
             if (isEditing) {
               updateTaskTextValue(editingTaskID, value);
+              Keyboard.dismiss();
               setIsEditing(false);
               setValue('');
-              Keyboard.dismiss();
             } else if (value) {
               const taskID = getRandomID();
               addTask(value, isComplete, taskID);
-              Keyboard.dismiss();
             } else {
               textInputRef.current?.focus();
             }
