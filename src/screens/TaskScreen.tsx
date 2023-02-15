@@ -1,12 +1,21 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {
+  createRef,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   ScrollView,
   SafeAreaView,
   View,
   Keyboard,
   TouchableOpacity,
+  TextInput as RNTextInput,
+  TextInputProps,
 } from 'react-native';
-import {FAB, Text, TextInput} from 'react-native-paper';
+import {Badge, FAB, Text, TextInput} from 'react-native-paper';
 import TaskComponent from '../components/TaskComponent';
 import {Colors} from '../style/Colors';
 import {Fonts} from '../style/Fonts';
@@ -31,20 +40,11 @@ export default function TaskScreen() {
   const [isFocused, setIsFocused] = useState(false);
   const [ongoingTabActive, setOngoingActive] = useState(true);
   const [completedTabActive, setCompletedActive] = useState(false);
-  const [completedTasks, setCompletedTasks] = useState([
-    {value: '', isComplete: false, id: 0},
-  ]);
-  const [ongoingTasks, setOngoingTasks] = useState([
-    {
-      value: '',
-      isComplete: false,
-      id: 0,
-    },
-  ]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingTaskID, setEditingTaskID] = useState(0);
+  const [emptyTaskValueTrigger, setEmptyTaskValueTrigger] = useState(false);
 
-  if (isFocused === false) {
-    Keyboard.dismiss();
-  }
+  let textInputRef = React.createRef<RNTextInput>();
 
   const getRandomID = () => {
     return Math.floor(Math.random() * 1000);
@@ -80,7 +80,7 @@ export default function TaskScreen() {
     storeData(newList);
   };
 
-  const updateTask = (id: number, isComplete: boolean) => {
+  const updateTaskCheckValue = (id: number, isComplete: boolean) => {
     const newList = todoList.map((item: any, index: number) => {
       if (index === id) {
         return {...item, isComplete: !isComplete};
@@ -91,11 +91,38 @@ export default function TaskScreen() {
     storeData(newList);
   };
 
+  const updateTaskTextValue = (id: number, value: string) => {
+    const newList = todoList.map((item: any, index: number) => {
+      if (index === id) {
+        textInputRef.current?.focus();
+        setValue(value);
+        setIsEditing(true);
+        setEditingTaskID(id);
+
+        setIsFocused(true);
+        return {...item, value: value};
+      }
+      return item;
+    });
+    setTodoList(newList);
+    storeData(newList);
+    setIsFocused(false);
+  };
+
   const storeData = async (value: any) => {
     try {
-      const jsonValue = JSON.stringify(value);
+      //map over the list and delete all tasks that have empty values
+      const filteredList = value.filter((item: any) => {
+        return item.value !== '';
+      });
+      if (filteredList.length === 0) {
+        setEmptyTaskValueTrigger(true);
+      }
+
+      const jsonValue = JSON.stringify(filteredList);
       await AsyncStorage.setItem('todoStorage', jsonValue);
       console.log('data saved');
+      emptyTaskValueTrigger === true ? setEmptyTaskValueTrigger(false) : null;
     } catch (e) {
       // saving error
       console.log('error saving data => ', e);
@@ -118,6 +145,43 @@ export default function TaskScreen() {
       console.log('error reading data => ', e);
     }
   };
+
+  //count how many tasks are completed
+  const countCompletedTasks = () => {
+    let count = 0;
+    todoList.forEach((item: any) => {
+      if (item.isComplete === true) {
+        count++;
+      }
+    });
+    return count;
+  };
+
+  //count how many tasks are ongoing
+  const countOngoingTasks = () => {
+    let count = 0;
+    todoList.forEach((item: any) => {
+      if (item.isComplete === false) {
+        count++;
+      }
+    });
+    return count;
+  };
+
+  //hard reset
+  // useEffect(() => {
+  //   setTodoList([]);
+  //   storeData([]);
+  // }, []);
+
+  //better rerender twice than not at all or all the time :D
+  useEffect(() => {
+    getData().then(data => {
+      if (data !== null) {
+        setTodoList(data);
+      }
+    });
+  }, [emptyTaskValueTrigger]);
 
   useEffect(() => {
     // setTodoList(todoList);
@@ -176,6 +240,24 @@ export default function TaskScreen() {
             }}>
             Ongoing
           </Text>
+          <Badge
+            visible={countOngoingTasks() > 0 ? true : false}
+            style={{
+              position: 'absolute',
+              right: '5%',
+              backgroundColor: ongoingTabActive
+                ? Colors.backgroundAccent
+                : Colors.backgroundLight,
+              color: ongoingTabActive ? Colors.textDark : Colors.textDark,
+              fontSize: 10,
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              textAlign: 'center',
+              textAlignVertical: 'center',
+            }}>
+            {countOngoingTasks()}
+          </Badge>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -204,6 +286,24 @@ export default function TaskScreen() {
             }}>
             Completed
           </Text>
+          <Badge
+            visible={countCompletedTasks() > 0 ? true : false}
+            style={{
+              position: 'absolute',
+              right: '5%',
+              backgroundColor: completedTabActive
+                ? Colors.backgroundAccent
+                : Colors.backgroundLight,
+              color: completedTabActive ? Colors.textDark : Colors.textDark,
+              fontSize: 10,
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              textAlign: 'center',
+              textAlignVertical: 'center',
+            }}>
+            {countCompletedTasks()}
+          </Badge>
         </TouchableOpacity>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -213,9 +313,7 @@ export default function TaskScreen() {
             paddingVertical: '4%',
           }}>
           {ongoingTabActive ? (
-            // ongoingTasks.length === 0 ? (
-            // todoList.map(()
-            todoList.length === 0 ? (
+            countOngoingTasks() === 0 ? (
               <Text
                 style={{
                   marginTop: '70%',
@@ -224,10 +322,9 @@ export default function TaskScreen() {
                   fontSize: 30,
                   fontFamily: Fonts.TextLight,
                 }}>
-                Create a task!
+                No ongoing tasks!
               </Text>
             ) : (
-              // ongoingTasks.map(
               todoList.map(
                 (item: {isComplete: boolean; value: string}, index: number) => {
                   if (item.value !== '' && item.isComplete === false) {
@@ -238,10 +335,13 @@ export default function TaskScreen() {
                         isComplete={item.isComplete}
                         taskID={index}
                         updateTask={() => {
-                          updateTask(index, item.isComplete);
+                          updateTaskCheckValue(index, item.isComplete);
                         }}
                         deleteTask={() => {
                           deleteTask(index);
+                        }}
+                        updateTaskText={(id: number, value: string) => {
+                          updateTaskTextValue(index, value);
                         }}
                       />
                     );
@@ -249,8 +349,7 @@ export default function TaskScreen() {
                 },
               )
             )
-          ) : // completedTasks.length === 0 ? (
-          todoList.length === 0 ? (
+          ) : countCompletedTasks() === 0 ? (
             <Text
               style={{
                 marginTop: '70%',
@@ -262,7 +361,6 @@ export default function TaskScreen() {
               No completed tasks yet!
             </Text>
           ) : (
-            // completedTasks.map(
             todoList.map(
               (item: {isComplete: boolean; value: string}, index: number) => {
                 if (item.value !== '' && item.isComplete === true) {
@@ -273,10 +371,13 @@ export default function TaskScreen() {
                       isComplete={item.isComplete}
                       taskID={index}
                       updateTask={() => {
-                        updateTask(index, item.isComplete);
+                        updateTaskCheckValue(index, item.isComplete);
                       }}
                       deleteTask={() => {
                         deleteTask(index);
+                      }}
+                      updateTaskText={(id: number, value: string) => {
+                        updateTaskTextValue(index, value);
                       }}
                     />
                   );
@@ -284,40 +385,6 @@ export default function TaskScreen() {
               },
             )
           )}
-          {/* //simpler */}
-          {/* {todoList.length === 0 ? (
-            <Text
-              style={{
-                marginTop: '50%',
-                color: Colors.textGrey,
-                alignSelf: 'center',
-                fontSize: 30,
-                fontFamily: Fonts.TextLight,
-              }}>
-              No tasks yet!
-            </Text>
-          ) : (
-            todoList.map(
-              (item: {isComplete: boolean; value: string}, index: number) => {
-                if (item.value !== '') {
-                  return (
-                    <TaskComponent
-                      key={index}
-                      taskName={item.value}
-                      isComplete={item.isComplete}
-                      taskID={index}
-                      updateTask={() => {
-                        updateTask(index, item.isComplete);
-                      }}
-                      deleteTask={() => {
-                        deleteTask(index);
-                      }}
-                    />
-                  );
-                }
-              },
-            )
-          )} */}
         </View>
       </ScrollView>
       <View
@@ -352,9 +419,11 @@ export default function TaskScreen() {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           placeholder="Add a task"
+          placeholderTextColor={Colors.textGrey}
+          ref={textInputRef}
         />
         <FAB
-          icon={isFocused ? 'check' : 'plus'}
+          icon={isFocused || value ? 'check' : 'plus'}
           animated={true}
           style={{
             backgroundColor: Colors.backgroundAccentDark,
@@ -362,11 +431,18 @@ export default function TaskScreen() {
           }}
           color={Colors.textDark}
           onPress={() => {
-            if (value) {
+            if (isEditing) {
+              updateTaskTextValue(editingTaskID, value);
+              Keyboard.dismiss();
+              setIsEditing(false);
+              setValue('');
+            } else if (value) {
               const taskID = getRandomID();
               addTask(value, isComplete, taskID);
+              setIsFocused(false);
               Keyboard.dismiss();
-              // setValue('');
+            } else {
+              textInputRef.current?.focus();
             }
           }}
         />
