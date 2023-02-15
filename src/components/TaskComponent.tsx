@@ -8,13 +8,15 @@ const TaskComponent = ({
   isComplete,
   deleteTask,
   taskID,
-  updateTask,
+  updateTask: updateTaskCheck,
+  updateTaskText,
 }: {
   taskName: string;
   isComplete: boolean;
   taskID: number;
   deleteTask: (id: number) => void;
   updateTask: (id: number, isComplete: boolean) => void;
+  updateTaskText: (id: number, text: string) => void;
 }) => {
   const [taskCheck, setTaskCheck] = useState(isComplete);
   //make sure to update the isComplete value from props to the state
@@ -39,9 +41,10 @@ const TaskComponent = ({
           alignItems: 'center',
         }}
         onPress={() => {
-          updateTask(taskID, taskCheck);
+          updateTaskCheck(taskID, taskCheck);
           setTaskCheck(!taskCheck);
-        }}>
+        }}
+        onLongPress={() => updateTaskText(taskID, taskName)}>
         <Checkbox
           //initially use isComplete value from props to set the checkbox status after adding a new task
           status={isComplete ? 'checked' : 'unchecked'}

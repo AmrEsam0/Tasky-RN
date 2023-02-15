@@ -40,16 +40,8 @@ export default function TaskScreen() {
   const [isFocused, setIsFocused] = useState(false);
   const [ongoingTabActive, setOngoingActive] = useState(true);
   const [completedTabActive, setCompletedActive] = useState(false);
-  const [completedTasks, setCompletedTasks] = useState([
-    {value: '', isComplete: false, id: 0},
-  ]);
-  const [ongoingTasks, setOngoingTasks] = useState([
-    {
-      value: '',
-      isComplete: false,
-      id: 0,
-    },
-  ]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingTaskID, setEditingTaskID] = useState(0);
 
   let textInputRef = React.createRef<RNTextInput>();
   if (isFocused === false) {
@@ -90,10 +82,26 @@ export default function TaskScreen() {
     storeData(newList);
   };
 
-  const updateTask = (id: number, isComplete: boolean) => {
+  const updateTaskCheckValue = (id: number, isComplete: boolean) => {
     const newList = todoList.map((item: any, index: number) => {
       if (index === id) {
         return {...item, isComplete: !isComplete};
+      }
+      return item;
+    });
+    setTodoList(newList);
+    storeData(newList);
+  };
+
+  const updateTaskTextValue = (id: number, value: string) => {
+    const newList = todoList.map((item: any, index: number) => {
+      if (index === id) {
+        textInputRef.current?.focus();
+        setValue(value);
+        setIsEditing(true);
+        setEditingTaskID(id);
+
+        return {...item, value: value};
       }
       return item;
     });
@@ -267,10 +275,13 @@ export default function TaskScreen() {
                         isComplete={item.isComplete}
                         taskID={index}
                         updateTask={() => {
-                          updateTask(index, item.isComplete);
+                          updateTaskCheckValue(index, item.isComplete);
                         }}
                         deleteTask={() => {
                           deleteTask(index);
+                        }}
+                        updateTaskText={(id: number, value: string) => {
+                          updateTaskTextValue(index, value);
                         }}
                       />
                     );
@@ -300,10 +311,13 @@ export default function TaskScreen() {
                       isComplete={item.isComplete}
                       taskID={index}
                       updateTask={() => {
-                        updateTask(index, item.isComplete);
+                        updateTaskCheckValue(index, item.isComplete);
                       }}
                       deleteTask={() => {
                         deleteTask(index);
+                      }}
+                      updateTaskText={(id: number, value: string) => {
+                        updateTaskTextValue(index, value);
                       }}
                     />
                   );
@@ -391,7 +405,12 @@ export default function TaskScreen() {
           }}
           color={Colors.textDark}
           onPress={() => {
-            if (value) {
+            if (isEditing) {
+              updateTaskTextValue(editingTaskID, value);
+              setIsEditing(false);
+              setValue('');
+              Keyboard.dismiss();
+            } else if (value) {
               const taskID = getRandomID();
               addTask(value, isComplete, taskID);
               Keyboard.dismiss();
