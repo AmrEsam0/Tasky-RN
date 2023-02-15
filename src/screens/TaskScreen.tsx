@@ -1,10 +1,19 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {
+  createRef,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   ScrollView,
   SafeAreaView,
   View,
   Keyboard,
   TouchableOpacity,
+  TextInput as RNTextInput,
+  TextInputProps,
 } from 'react-native';
 import {FAB, Text, TextInput} from 'react-native-paper';
 import TaskComponent from '../components/TaskComponent';
@@ -42,6 +51,7 @@ export default function TaskScreen() {
     },
   ]);
 
+  let textInputRef = React.createRef<RNTextInput>();
   if (isFocused === false) {
     Keyboard.dismiss();
   }
@@ -369,6 +379,8 @@ export default function TaskScreen() {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           placeholder="Add a task"
+          placeholderTextColor={Colors.textGrey}
+          ref={textInputRef}
         />
         <FAB
           icon={isFocused ? 'check' : 'plus'}
@@ -383,7 +395,8 @@ export default function TaskScreen() {
               const taskID = getRandomID();
               addTask(value, isComplete, taskID);
               Keyboard.dismiss();
-              // setValue('');
+            } else {
+              textInputRef.current?.focus();
             }
           }}
         />
