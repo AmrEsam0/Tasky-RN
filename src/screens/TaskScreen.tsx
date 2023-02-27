@@ -1,11 +1,4 @@
-import React, {
-  createRef,
-  RefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -13,7 +6,6 @@ import {
   Keyboard,
   TouchableOpacity,
   TextInput as RNTextInput,
-  TextInputProps,
 } from 'react-native';
 import {Badge, FAB, Text, TextInput} from 'react-native-paper';
 import TaskComponent from '../components/TaskComponent';
@@ -27,6 +19,7 @@ interface todo {
 }
 
 //TODO: LANDING PAGE, YO!
+//TODO: R E F A C T O R, T H I S I S  A  M E S S
 export default function TaskScreen() {
   const [todoList, setTodoList] = useState<
     {

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import {Checkbox, IconButton, Text, TextInput} from 'react-native-paper';
+import {Checkbox, IconButton, Text} from 'react-native-paper';
 import {Colors} from '../style/Colors';
 
 const TaskComponent = ({
