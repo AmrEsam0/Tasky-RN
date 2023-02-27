@@ -290,7 +290,7 @@ export default function TaskScreen() {
             visible={countCompletedTasks() > 0 ? true : false}
             style={{
               position: 'absolute',
-              right: '5%',
+              left: '5%',
               backgroundColor: completedTabActive
                 ? Colors.backgroundAccent
                 : Colors.backgroundLight,
