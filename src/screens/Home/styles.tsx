@@ -27,4 +27,23 @@ export const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
   },
+  bottomView: {
+    position: 'absolute',
+    bottom: '4%',
+    flex: 1,
+    paddingVertical: '2%',
+    alignSelf: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  inputField: {
+    backgroundColor: Colors.backgroundTabDark,
+    flex: 1,
+    borderTopEndRadius: 4,
+    borderTopStartRadius: 4,
+    borderBottomEndRadius: 4,
+    borderBottomStartRadius: 4,
+  },
+  FAB: {backgroundColor: Colors.backgroundAccentDark, marginLeft: '2%'},
 });

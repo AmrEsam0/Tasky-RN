@@ -4,16 +4,15 @@ import {
   SafeAreaView,
   View,
   Keyboard,
-  TouchableOpacity,
   TextInput as RNTextInput,
 } from 'react-native';
-import {Badge, FAB, Text, TextInput} from 'react-native-paper';
+import {FAB, TextInput} from 'react-native-paper';
 import TaskComponent from '../../components/TaskComponent';
 import {Colors} from '../../style/Colors';
-import {Fonts} from '../../style/Fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styles} from './styles';
 import {PressableTab} from '../../components/PressableTab';
+import {EmptyListText} from '../../components/EmptyListText';
 
 interface todo {
   value: string;
@@ -229,16 +228,7 @@ export default function HomeScreen() {
           }}>
           {ongoingTabActive ? (
             countOngoingTasks() === 0 ? (
-              <Text
-                style={{
-                  marginTop: '70%',
-                  color: Colors.textGrey,
-                  alignSelf: 'center',
-                  fontSize: 30,
-                  fontFamily: Fonts.TextLight,
-                }}>
-                No ongoing tasks!
-              </Text>
+              <EmptyListText text="No ongoing tasks!" />
             ) : (
               todoList.map(
                 (item: {isComplete: boolean; value: string}, index: number) => {
@@ -265,16 +255,7 @@ export default function HomeScreen() {
               )
             )
           ) : countCompletedTasks() === 0 ? (
-            <Text
-              style={{
-                marginTop: '70%',
-                color: Colors.textGrey,
-                alignSelf: 'center',
-                fontSize: 30,
-                fontFamily: Fonts.TextLight,
-              }}>
-              No completed tasks yet!
-            </Text>
+            <EmptyListText text="No completed tasks yet!" />
           ) : (
             todoList.map(
               (item: {isComplete: boolean; value: string}, index: number) => {
@@ -302,26 +283,9 @@ export default function HomeScreen() {
           )}
         </View>
       </ScrollView>
-      <View
-        style={{
-          position: 'absolute',
-          bottom: '4%',
-          flex: 1,
-          paddingVertical: '2%',
-          alignSelf: 'center',
-          alignContent: 'center',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
+      <View style={styles.bottomView}>
         <TextInput
-          style={{
-            backgroundColor: Colors.backgroundTabDark,
-            flex: 1,
-            borderTopEndRadius: 4,
-            borderTopStartRadius: 4,
-            borderBottomEndRadius: 4,
-            borderBottomStartRadius: 4,
-          }}
+          style={styles.inputField}
           textColor={Colors.textPrimary}
           outlineColor=""
           value={value}
@@ -340,10 +304,7 @@ export default function HomeScreen() {
         <FAB
           icon={isFocused || value ? 'check' : 'plus'}
           animated={true}
-          style={{
-            backgroundColor: Colors.backgroundAccentDark,
-            marginLeft: '2%',
-          }}
+          style={styles.FAB}
           color={Colors.textDark}
           onPress={() => {
             if (isEditing) {
