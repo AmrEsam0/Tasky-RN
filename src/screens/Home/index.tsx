@@ -8,10 +8,12 @@ import {
   TextInput as RNTextInput,
 } from 'react-native';
 import {Badge, FAB, Text, TextInput} from 'react-native-paper';
-import TaskComponent from '../components/TaskComponent';
-import {Colors} from '../style/Colors';
-import {Fonts} from '../style/Fonts';
+import TaskComponent from '../../components/TaskComponent';
+import {Colors} from '../../style/Colors';
+import {Fonts} from '../../style/Fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {styles} from './styles';
+import {PressableTab} from '../../components/PressableTab';
 
 interface todo {
   value: string;
@@ -19,8 +21,8 @@ interface todo {
 }
 
 //TODO: LANDING PAGE, YO!
-//TODO: R E F A C T O R, T H I S I S  A  M E S S
-export default function TaskScreen() {
+//TODO: R E F A C T O R, T H I S  I S  A  M E S S
+export default function HomeScreen() {
   const [todoList, setTodoList] = useState<
     {
       value: string;
@@ -186,118 +188,38 @@ export default function TaskScreen() {
   }, []);
 
   return (
-    <SafeAreaView
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundColor: Colors.backgroundDarkest,
-        paddingTop: '4%',
-        paddingHorizontal: '4%',
-      }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 38,
-          width: '96%',
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          borderBottomLeftRadius: 20,
-          borderBottomRightRadius: 20,
-          alignSelf: 'center',
-          marginBottom: '4%',
-        }}>
-        <TouchableOpacity
-          onPress={() => {
+    <SafeAreaView style={styles.screenContainer}>
+      <View style={styles.tabView}>
+        <PressableTab
+          onPressLeft={() => {
             setOngoingActive(true);
             setCompletedActive(false);
           }}
-          style={{
-            backgroundColor: ongoingTabActive
-              ? Colors.backgroundLighter
-              : Colors.backgroundTabDark,
-            flex: 1,
-            height: '100%',
-            justifyContent: 'center',
-            borderTopLeftRadius: 20,
-            borderBottomLeftRadius: 20,
-          }}>
-          <Text
-            variant="bodyMedium"
-            style={{
-              textAlign: 'center',
-              alignSelf: 'center',
-              fontFamily: ongoingTabActive ? Fonts.TextBold : Fonts.TextLight,
-              color: ongoingTabActive ? Colors.textDark : Colors.textPrimary,
-            }}>
-            Ongoing
-          </Text>
-          <Badge
-            visible={countOngoingTasks() > 0 ? true : false}
-            style={{
-              position: 'absolute',
-              right: '5%',
-              backgroundColor: ongoingTabActive
-                ? Colors.backgroundAccent
-                : Colors.backgroundLight,
-              color: ongoingTabActive ? Colors.textDark : Colors.textDark,
-              fontSize: 10,
-              width: 20,
-              height: 20,
-              borderRadius: 10,
-              textAlign: 'center',
-              textAlignVertical: 'center',
-            }}>
-            {countOngoingTasks()}
-          </Badge>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
+          onPressRight={() => {
             setOngoingActive(false);
             setCompletedActive(true);
           }}
-          style={{
-            backgroundColor: completedTabActive
-              ? Colors.backgroundLighter
-              : Colors.backgroundTabDark,
-            flex: 1,
-            marginLeft: '1%',
-            height: '100%',
-            justifyContent: 'center',
-            borderTopRightRadius: 20,
-            borderBottomRightRadius: 20,
-          }}>
-          <Text
-            variant="bodyMedium"
-            style={{
-              textAlign: 'center',
-              alignSelf: 'center',
-              fontFamily: completedTabActive ? Fonts.TextBold : Fonts.TextLight,
-              color: completedTabActive ? Colors.textDark : Colors.textPrimary,
-            }}>
-            Completed
-          </Text>
-          <Badge
-            visible={countCompletedTasks() > 0 ? true : false}
-            style={{
-              position: 'absolute',
-              left: '5%',
-              backgroundColor: completedTabActive
-                ? Colors.backgroundAccent
-                : Colors.backgroundLight,
-              color: completedTabActive ? Colors.textDark : Colors.textDark,
-              fontSize: 10,
-              width: 20,
-              height: 20,
-              borderRadius: 10,
-              textAlign: 'center',
-              textAlignVertical: 'center',
-            }}>
-            {countCompletedTasks()}
-          </Badge>
-        </TouchableOpacity>
+          leftTab={true}
+          ongoingTabActive={ongoingTabActive}
+          completedTabActive={completedTabActive}
+          onGoingTasksCount={countOngoingTasks()}
+          completedTasksCount={countCompletedTasks()}
+        />
+        <PressableTab
+          onPressLeft={() => {
+            setOngoingActive(true);
+            setCompletedActive(false);
+          }}
+          onPressRight={() => {
+            setOngoingActive(false);
+            setCompletedActive(true);
+          }}
+          leftTab={false}
+          ongoingTabActive={ongoingTabActive}
+          completedTabActive={completedTabActive}
+          onGoingTasksCount={countOngoingTasks()}
+          completedTasksCount={countCompletedTasks()}
+        />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View

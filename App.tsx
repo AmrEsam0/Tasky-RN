@@ -2,7 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {Colors} from './src/style/Colors';
-import TaskScreen from './src/screens/TaskScreen';
+import HomeScreen from './src/screens/Home';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
             statusBarColor: Colors.backgroundDarkest,
             statusBarStyle: 'light',
           }}>
-          <Stack.Screen name="TaskScreen" component={TaskScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
