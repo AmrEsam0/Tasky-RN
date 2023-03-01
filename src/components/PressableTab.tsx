@@ -61,7 +61,7 @@ export const PressableTab = ({
             ? Colors.textDark
             : Colors.textPrimary,
         }}>
-        Ongoing
+        {leftTab ? 'Ongoing' : 'Completed'}
       </Text>
       <Badge
         visible={

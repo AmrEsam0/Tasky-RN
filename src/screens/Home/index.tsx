@@ -13,15 +13,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styles} from './styles';
 import {PressableTab} from '../../components/PressableTab';
 import {EmptyListText} from '../../components/EmptyListText';
+import {CustomToastNotification} from '../../components/ToastNotification';
 
 interface todo {
   value: string;
   isComplete: boolean;
+  id: number;
 }
 
 //TODO: LANDING PAGE, YO!
 //TODO: R E F A C T O R, T H I S  I S  A  M E S S
-export default function HomeScreen() {
+export const HomeScreen = () => {
   const [todoList, setTodoList] = useState<
     {
       value: string;
@@ -37,11 +39,21 @@ export default function HomeScreen() {
   const [isEditing, setIsEditing] = useState(false);
   const [editingTaskID, setEditingTaskID] = useState(0);
   const [emptyTaskValueTrigger, setEmptyTaskValueTrigger] = useState(false);
+  const [lastDeletedTask, setlastDeletedTask] = useState<todo>();
+  const [showToast, setShowToast] = useState(false);
 
   let textInputRef = React.createRef<RNTextInput>();
 
   const getRandomID = () => {
     return Math.floor(Math.random() * 1000);
+  };
+
+  const handleToast = (task: todo) => {
+    setlastDeletedTask(task);
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 3000);
   };
 
   // const dataRefresher = useCallback(() => {
@@ -59,7 +71,6 @@ export default function HomeScreen() {
         ...todoList,
         {value: value, isComplete: isComplete, id: id},
       ];
-      // const newList = [{value: 'asd', isComplete: false, id: 0}];
       setTodoList(newList);
       setValue('');
       storeData(newList);
@@ -70,6 +81,12 @@ export default function HomeScreen() {
     const newList = todoList.filter((item: any, index: number) => {
       return index !== id;
     });
+    setTodoList(newList);
+    storeData(newList);
+  };
+
+  const undoDeleteTask = (task: todo) => {
+    const newList = [...todoList, task];
     setTodoList(newList);
     storeData(newList);
   };
@@ -175,8 +192,8 @@ export default function HomeScreen() {
         setTodoList(data);
       }
     });
-  }, [emptyTaskValueTrigger]);
-
+    console.log('last deleted => ', lastDeletedTask);
+  }, [emptyTaskValueTrigger, lastDeletedTask]);
   useEffect(() => {
     // setTodoList(todoList);
     getData().then(data => {
@@ -243,7 +260,9 @@ export default function HomeScreen() {
                           updateTaskCheckValue(index, item.isComplete);
                         }}
                         deleteTask={() => {
+                          setlastDeletedTask(todoList[index]);
                           deleteTask(index);
+                          handleToast(todoList[index]);
                         }}
                         updateTaskText={(id: number, value: string) => {
                           updateTaskTextValue(index, value);
@@ -270,7 +289,9 @@ export default function HomeScreen() {
                         updateTaskCheckValue(index, item.isComplete);
                       }}
                       deleteTask={() => {
+                        setlastDeletedTask(todoList[index]);
                         deleteTask(index);
+                        handleToast(todoList[index]);
                       }}
                       updateTaskText={(id: number, value: string) => {
                         updateTaskTextValue(index, value);
@@ -323,6 +344,16 @@ export default function HomeScreen() {
           }}
         />
       </View>
+      {showToast && (
+        <CustomToastNotification
+          onPressUndo={() => {
+            lastDeletedTask !== undefined
+              ? undoDeleteTask(lastDeletedTask)
+              : null;
+            setShowToast(false);
+          }}
+        />
+      )}
     </SafeAreaView>
   );
-}
+};

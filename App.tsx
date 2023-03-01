@@ -2,7 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {Colors} from './src/style/Colors';
-import HomeScreen from './src/screens/Home';
+import {HomeScreen} from './src/screens/Home';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export default function App() {
